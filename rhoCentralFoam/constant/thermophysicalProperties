@@ -19,7 +19,7 @@ thermoType
     type            hePsiThermo;
     mixture         pureMixture;
     transport       sutherland;
-    thermo          janaf;
+    thermo          hConst;
     equationOfState perfectGas;
     specie          specie;
     energy          sensibleInternalEnergy;
@@ -33,11 +33,8 @@ mixture
     }
     thermodynamics
     {
-        Tlow            100;
-        Thigh           10000;
-        Tcommon         1000;
-        highCpCoeffs    ( 2.9525407 0.0013968838 -4.9262577e-07 7.8600091e-11 -4.6074978e-15 -923.93753 5.8718221 );
-        lowCpCoeffs     ( 3.5309628 -0.0001236595 -5.0299339e-07 2.4352768e-09 -1.4087954e-12 -1046.9637 2.9674391 );
+        Cp              1004.4;
+        Hf              0;
     }
     transport
     {

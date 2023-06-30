@@ -1,0 +1,53 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include        "include/initialConditions"
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform $pressure;
+
+boundaryField
+{
+    wallPatch
+    {
+        type            zeroGradient;
+    }
+
+    inletPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
+    }
+
+    outletPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
+    }
+
+    farFieldPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
+    }
+
+    symmetryPatch
+    {
+        type            symmetry; // symmetryPlane might cause problems if the surface is not perfectly flat 
+    }
+}
+
+// ************************************************************************* //

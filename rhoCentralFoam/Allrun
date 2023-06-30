@@ -5,21 +5,10 @@ cd "${0%/*}" || exit 1    # Run from this directory
 . "$WM_PROJECT_DIR/bin/tools/RunFunctions"
 
 runApplication blockMesh
+restore0Dir
+runApplication decomposePar
 
-runApplication datToFoam constant/grid256.dat
-
-points="constant/polyMesh/points"
-pointsTmp="constant/points.tmp"
-sed -i -e 's/binary/ascii/' -ne '1,17p' $points
-cat $pointsTmp >> $points
-rm $pointsTmp
-
-runApplication collapseEdges -overwrite
-
-echo "Changing patch type to wedge type in boundary file"
-sed -i '/wedge/,/nFaces/{s/patch/wedge/}' constant/polyMesh/boundary
-
-runApplication "$(getApplication)"
+runApplication -append "$(getApplication)"
 
 
 #------------------------------------------------------------------------------

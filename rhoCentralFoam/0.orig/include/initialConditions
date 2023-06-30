@@ -5,21 +5,11 @@
     \\  /    A nd           | Version:  9
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
-FoamFile
-{
-    format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      momentumTransport;
-}
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  laminar; // REVIEW: start simulation laminar simulation to test the system 
-
-RAS
-{
-    turbulence      on;
-    RASModel        kOmegaSST;
-}
+flowVelocity         (408.3528 0 0);
+pressure             101325;
+temperature          288.15;
+turbulentKE          0.24;
+turbulentOmega       1.78;
 
 // ************************************************************************* //
