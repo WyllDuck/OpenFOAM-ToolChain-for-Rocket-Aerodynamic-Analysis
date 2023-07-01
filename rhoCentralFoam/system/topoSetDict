@@ -10,48 +10,20 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      topoSetDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+actions
+(
+    {
+        name    remainCells;
+        type    cellSet;
+        action  new;
+        source  boxToCell;
+        box     (-100 0 0) (100 100 100);
+    }
+);
 
-startFrom       latestTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         1e-3;
-
-deltaT          1e-7;
-
-writeControl    adjustableRunTime;
-
-writeInterval   5e-5;
-
-purgeWrite      0;
-
-writeFormat     binary; // IMPORTANT for cfmesh latter!
-
-writePrecision  15;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
-
-maxDeltaT       2e-8;
-
-functions
-{
-}
 
 // ************************************************************************* //

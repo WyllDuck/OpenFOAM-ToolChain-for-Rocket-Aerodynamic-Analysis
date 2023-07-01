@@ -1,0 +1,6 @@
+.vscode
+log.*
+processor*
+0
+rhoCentralFoam/constant/polyMesh/
+debug.vtk

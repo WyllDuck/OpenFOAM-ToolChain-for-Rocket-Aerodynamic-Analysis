@@ -1,14 +1,18 @@
 #!/bin/sh
-cd "${0%/*}" || exit 1    # Run from this directory
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
 
-# Source tutorial run functions
-. "$WM_PROJECT_DIR/bin/tools/RunFunctions"
+# runApplication blockMesh
+# runApplication topoSet
+# runApplication subsetMesh -overwrite remainCells -patch symmetry
+# runApplication createPatch -overwrite 
 
-runApplication blockMesh
-restore0Dir
+# restore0Dir
+
 runApplication decomposePar
 
-runApplication -append "$(getApplication)"
+runParallel -append "$(getApplication)"
 
 
 #------------------------------------------------------------------------------
