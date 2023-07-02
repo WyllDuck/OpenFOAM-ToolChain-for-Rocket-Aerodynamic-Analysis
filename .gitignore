@@ -2,5 +2,5 @@
 log.*
 processor*
 0
-rhoCentralFoam/constant/polyMesh/
+polyMesh
 debug.vtk

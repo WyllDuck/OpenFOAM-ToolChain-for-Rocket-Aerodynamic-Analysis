@@ -3,16 +3,14 @@ cd "${0%/*}" || exit                                # Run from this directory
 . ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
 #------------------------------------------------------------------------------
 
-# runApplication topoSet
-# runApplication subsetMesh -overwrite remainCells -patch symmetry
-# runApplication createPatch -overwrite
-# touch case.foam
+MESH_DIR="/home/felix/sphereCases/sphereMesh/sphereBlockMesh/constant/polyMesh"
 
-# restore0Dir
+mkdir constant
+cp -r $MESH_DIR constant
 
-# runApplication decomposePar
-
-runParallel -append "$(getApplication)"
-
+runApplication topoSet
+runApplication subsetMesh -overwrite remainCells -patch symmetry
+runApplication createPatch -overwrite
+touch case.foam
 
 #------------------------------------------------------------------------------
