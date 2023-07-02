@@ -4,13 +4,15 @@ cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
 # runApplication blockMesh
+
 # runApplication topoSet
 # runApplication subsetMesh -overwrite remainCells -patch symmetry
-# runApplication createPatch -overwrite 
+# runApplication createPatch -overwrite
+# touch case.foam
 
 # restore0Dir
 
-runApplication decomposePar
+# runApplication decomposePar
 
 runParallel -append "$(getApplication)"
 

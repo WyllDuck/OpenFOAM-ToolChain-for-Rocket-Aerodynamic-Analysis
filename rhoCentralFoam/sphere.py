@@ -9,7 +9,7 @@ from classy_blocks.util import constants
 
 # SPHERE
 R_SPHERE                            = 0.05      # [m]
-R_SPHERE_OUTER                      = 1.6       # [m] - diameter of the outer sphere, zone with strucutred mesh shaped like a sphere
+R_SPHERE_OUTER                      = 1.7       # [m] - diameter of the outer sphere, zone with strucutred mesh shaped like a sphere
 
 # CELL SIZE
 BALL_CELL_SIZE                      = 0.001     # [m]
