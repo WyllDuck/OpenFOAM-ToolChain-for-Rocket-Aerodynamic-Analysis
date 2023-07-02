@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+forceCoeffs1
+{
+    // Mandatory entries
+    type            forceCoeffs;
+    libs            ("libforces.so");
+    patches         (wallPatch);
+
+
+    // Optional entries
+
+    // Field names
+    p               p;
+    U               U;
+    rho             rho;
+    rhoInf          1;
+
+    // Reference pressure [Pa]
+    pRef            101325;
+
+    // Include porosity effects?
+    porosity        no;
+
+    // Store and write volume field representations of forces and moments
+    writeFields     no;
+
+    // Centre of rotation for moment calculations
+    CofR            (0 0 0);
+
+    // Lift direction
+    liftDir         (0 0 1);
+
+    // Drag direction
+    dragDir         (1 0 0);
+
+    // Pitch axis
+    pitchAxis       (0 1 0);
+
+    // Freestream velocity magnitude [m/s]
+    magUInf         408.3528;
+
+    // Reference length [m]
+    lRef            0.1;
+
+    // Reference area [m2]
+    Aref            0.001963495; // 1/4 of a cicle of 0.1 [m] diameter
+
+    // Spatial data binning
+    // - extents given by the bounds of the input geometry
+    binData
+    {
+        nBin        20;
+        direction   (1 0 0);
+        cumulative  yes;
+    }
+}

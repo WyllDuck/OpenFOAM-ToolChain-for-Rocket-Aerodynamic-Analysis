@@ -4,3 +4,4 @@ processor*
 0
 polyMesh
 debug.vtk
+run
