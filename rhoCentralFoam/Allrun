@@ -7,14 +7,12 @@ MESH_DIR="/home/felix/sphereCases/sphereMesh/sphereBlockMeshCut/constant/polyMes
 
 mkdir constant
 cp -r $MESH_DIR constant
+touch case.foam
 
 restore0Dir
 
 runApplication decomposePar
 
 runParallel -append "$(getApplication)"
-
-touch case.foam
-
 
 #------------------------------------------------------------------------------

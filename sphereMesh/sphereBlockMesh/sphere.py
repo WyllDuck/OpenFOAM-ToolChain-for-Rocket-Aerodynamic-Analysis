@@ -12,18 +12,21 @@ R_SPHERE                            = 0.05      # [m]
 R_SPHERE_OUTER                      = 1.7       # [m] - diameter of the outer sphere, zone with strucutred mesh shaped like a sphere
 
 # CELL SIZE
-BALL_CELL_SIZE                      = 0.001     # [m]
+BALL_CELL_SIZE                      = 0.00035   # [m]
 DOMAIN_CELL_SIZE                    = 0.1       # [m]
 
 print("BALL_CELL_SIZE:\t", BALL_CELL_SIZE)
 print("DOMAIN_CELL_SIZE:\t", DOMAIN_CELL_SIZE)
 
 # REFINEMENT LAYER
-TOTAL_THICKNESS_REFINEMENT_LAYER    = 0.01      # [m]
-FIRST_LAYER_THICKNESS               = 0.00005   # [m]
+TOTAL_THICKNESS_REFINEMENT_LAYER    = 0.0010    # [m]
+COUNT_REFINEMENT_LAYER              = 30        # [º]
+C2C_EXPANSION_REFINEMENT_LAYER      = 1.2       # [º]
 
 print("TOTAL_THICKNESS_REFINEMENT_LAYER:\t", TOTAL_THICKNESS_REFINEMENT_LAYER)
-print("FIRST_LAYER_THICKNESS:\t", FIRST_LAYER_THICKNESS)
+print("COUNT_REFINEMENT_LAYER:\t", COUNT_REFINEMENT_LAYER)
+print("C2C_EXPANSION_REFINEMENT_LAYER:\t", C2C_EXPANSION_REFINEMENT_LAYER)
+
 
 # ----------------- AUTOMATIC ----------------- 
 r2 = R_SPHERE
@@ -112,7 +115,7 @@ def main ():
         32: 'top',
     }
 
-    oplist = add_ring(oplist, projected_faces, (BALL_CELL_SIZE, FIRST_LAYER_THICKNESS), "sphere_2", r2/r1, invert=0)
+    oplist = add_boundary_layer(oplist, projected_faces, "sphere_2", r2/r1, invert=0)
     for i in range(6):
         oplist[i+33].set_patch('top', 'sphere')
 
@@ -195,7 +198,7 @@ def create_3x3 (oplist, projected_faces):
 
 def add_ring (oplist, projected_faces, sizes, str_sphere, growth, invert=1):
 
-    cell_size, FIRST_LAYER_THICKNESS = sizes
+    cell_size1, cell_size2 = sizes
 
     j = 0
     for i, side in projected_faces.items():
@@ -215,7 +218,35 @@ def add_ring (oplist, projected_faces, sizes, str_sphere, growth, invert=1):
 
         o.chop(0, count=count)
         o.chop(1, count=count)
-        o.chop(2, start_size=cell_size, end_size=FIRST_LAYER_THICKNESS)
+        o.chop(2, start_size=cell_size1, end_size=cell_size2)
+
+        oplist.append(o)
+        j+=1
+
+    return oplist
+
+
+def add_boundary_layer (oplist, projected_faces, str_sphere, growth, invert=1):
+
+    j = 0
+    for i, side in projected_faces.items():
+        block = oplist[i]
+
+        bottom_face = block.get_face(side)
+
+        if j > 2 and invert:
+            # starting from block's "other side"
+            bottom_face = bottom_face.invert()
+
+        top_points = np.array([bottom_face.points[j].position for j in range(4)])*growth
+        top_face = Face(top_points)
+
+        o = Loft(bottom_face, top_face)
+        o.project_side('top', str_sphere, edges=True)
+
+        o.chop(0, count=count)
+        o.chop(1, count=count)
+        o.chop(2, count=COUNT_REFINEMENT_LAYER, c2c_expansion=1/C2C_EXPANSION_REFINEMENT_LAYER)
 
         oplist.append(o)
         j+=1
