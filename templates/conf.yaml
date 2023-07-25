@@ -1,8 +1,10 @@
+mesh_file:            "/home/felix/sphereCases/sphereMesh/sphereBlockMeshCut/constant/polyMesh"
+
 flowVelocity:         [408.3528, 0, 0]  # flow velocity [m/s]
 pressure:             101325        # static pressure [Pa]
 temperature:          288.15        # static temperature [K]
 
-# Force Coefficients
+# Force Coefficients - postProcessing
 Aref:                 0.001963495   # reference area [m2]
 lRef:                 0.1           # reference lenght [m]
 
