@@ -6,9 +6,9 @@
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 
-flowVelocity         (408.3528 0 0);
-pressure             101325;
-temperature          288.15;
+flowVelocity         {{ "({} {} {})".format(flowVelocity[0], flowVelocity[1], flowVelocity[2]) }};
+pressure             {{ pressure }};
+temperature          {{ temperature }};
 turbulentKE          0.24;
 turbulentOmega       1.78;
 

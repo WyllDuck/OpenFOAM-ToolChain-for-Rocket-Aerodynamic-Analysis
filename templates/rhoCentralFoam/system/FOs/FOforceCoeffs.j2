@@ -23,7 +23,7 @@ forceCoeffs1
     rhoInf          1;
 
     // Reference pressure [Pa]
-    pRef            101325;
+    pRef            {{ pressure }};
 
     // Include porosity effects?
     porosity        no;
@@ -32,25 +32,25 @@ forceCoeffs1
     writeFields     no;
 
     // Centre of rotation for moment calculations
-    CofR            (0 0 0);
+    CofR            {{ "({} {} {})".format(CofR[0], CofR[1], CofR[2]) }};
 
     // Lift direction
-    liftDir         (0 0 1);
+    liftDir         {{ "({} {} {})".format(liftDir[0], liftDir[1], liftDir[2]) }};
 
     // Drag direction
-    dragDir         (1 0 0);
+    dragDir         {{ "({} {} {})".format(dragDir[0], dragDir[1], dragDir[2]) }};
 
     // Pitch axis
-    pitchAxis       (0 1 0);
+    pitchAxis       {{ "({} {} {})".format(pitchAxis[0], pitchAxis[1], pitchAxis[2]) }};
 
     // Freestream velocity magnitude [m/s]
-    magUInf         408.3528;
+    magUInf         {{ (flowVelocity[0]**2 + flowVelocity[1]**2 + flowVelocity[2]**2)**0.5 }};
 
     // Reference length [m]
-    lRef            0.1;
+    lRef            {{ lRef }};
 
     // Reference area [m2]
-    Aref            0.001963495; // 1/4 of a cicle of 0.1 [m] diameter
+    Aref            {{ Aref }};
 
     // Spatial data binning
     // - extents given by the bounds of the input geometry
