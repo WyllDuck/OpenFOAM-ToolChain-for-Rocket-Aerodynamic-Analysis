@@ -9,17 +9,17 @@ from classy_blocks.util import constants
 
 # SPHERE
 R_SPHERE                            = 0.05      # [m]
-R_SPHERE_OUTER                      = 1.7       # [m] - diameter of the outer sphere, zone with strucutred mesh shaped like a sphere
+R_SPHERE_OUTER                      = 1.95      # [m] - diameter of the outer sphere, zone with strucutred mesh shaped like a sphere
 
 # CELL SIZE
-BALL_CELL_SIZE                      = 0.00035   # [m]
-DOMAIN_CELL_SIZE                    = 0.1       # [m]
+BALL_CELL_SIZE                      = 0.00015   # [m]
+DOMAIN_CELL_SIZE                    = 0.08      # [m]
 
 print("BALL_CELL_SIZE:\t", BALL_CELL_SIZE)
 print("DOMAIN_CELL_SIZE:\t", DOMAIN_CELL_SIZE)
 
 # REFINEMENT LAYER
-TOTAL_THICKNESS_REFINEMENT_LAYER    = 0.0010    # [m]
+TOTAL_THICKNESS_REFINEMENT_LAYER    = 0.0005    # [m]
 COUNT_REFINEMENT_LAYER              = 30        # [º]
 C2C_EXPANSION_REFINEMENT_LAYER      = 1.2       # [º]
 
@@ -129,8 +129,8 @@ def main ():
     # of blocks need specific counts set
 
     # x-direction
-    for i in (12, 14):
-        oplist[i].chop(0, start_size=DOMAIN_CELL_SIZE, end_size=DOMAIN_CELL_SIZE)
+    oplist[12].chop(0, start_size=DOMAIN_CELL_SIZE*2.5, end_size=DOMAIN_CELL_SIZE)
+    oplist[14].chop(0, start_size=DOMAIN_CELL_SIZE, end_size=DOMAIN_CELL_SIZE*4)
 
     # y-direction
     for i in (10, 16):

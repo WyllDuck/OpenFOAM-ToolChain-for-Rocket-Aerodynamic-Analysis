@@ -20,8 +20,8 @@ yPlus1
     region          region0;
     enabled         true;
     log             true;
-    timeStart       0;
-    timeEnd         1000;
+    // timeStart       0;
+    // timeEnd         1000;
 
     writeFields     yes;
     executeControl  timeStep;

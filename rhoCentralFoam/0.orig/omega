@@ -9,41 +9,38 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      fvSolution;
+    class       volScalarField;
+    object      omega;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+#include        "include/initialConditions"
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform $turbulentOmega;
+
+boundaryField
 {
-    "(rho|rhoU|rhoE)"
+    "(.*)"
     {
-        solver          diagonal;
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
     }
 
-    U
+    wallPatch
     {
-        solver          smoothSolver;
-        smoother        GaussSeidel;
-        nSweeps         2;
-        tolerance       1e-09;
-        relTol          0.01;
+        type            omegaWallFunction;
+        value           $internalField;
     }
 
-    e
+    symmetryPatch
     {
-        $U;
-        relTol          0.1;
+        type            symmetry;
     }
 
-    // TURBULENCE KWSST
-    "(k|omega)"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0.1;
-    }
+    #includeEtc "caseDicts/setConstraintTypes"
 }
 
 

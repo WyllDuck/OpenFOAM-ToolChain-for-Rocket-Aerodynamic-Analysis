@@ -4,6 +4,8 @@ cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
 MESH_DIR="/home/felix/sphereCases/sphereMesh/sphereBlockMeshCut/constant/polyMesh"
+MAP_DIR="/home/felix/sphereCases/run/rhoCentralFoam2"
+TIME=0.00404996
 
 mkdir constant
 cp -r $MESH_DIR constant
@@ -11,6 +13,7 @@ touch case.foam
 
 restore0Dir
 
+# runApplication mapFields $MAP_DIR -sourceTime $TIME
 runApplication decomposePar
 
 runParallel -append "$(getApplication)"

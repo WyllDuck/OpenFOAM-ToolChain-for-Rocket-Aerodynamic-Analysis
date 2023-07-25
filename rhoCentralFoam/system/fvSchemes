@@ -31,6 +31,11 @@ divSchemes
     default         none;
 
     div(tauMC)      Gauss linear;
+
+    // TURBULENCE KWSST
+    turbulence      bounded Gauss upwind;
+    div(phi,k)      $turbulence;
+    div(phi,omega)  $turbulence;
 }
 
 laplacianSchemes
@@ -57,5 +62,10 @@ snGradSchemes
     default         corrected;
 }
 
+
+wallDist
+{
+    method          meshWave;
+}
 
 // ************************************************************************* //

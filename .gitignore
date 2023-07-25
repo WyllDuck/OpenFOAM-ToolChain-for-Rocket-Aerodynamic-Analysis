@@ -5,3 +5,4 @@ processor*
 polyMesh
 debug.vtk
 run
+postProcessing
