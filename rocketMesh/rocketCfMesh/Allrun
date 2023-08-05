@@ -9,6 +9,10 @@ runApplication surfaceGenerateBoundingBox rocket.stl geometry.stl 2 8 0 2 2 2
 runApplication surfaceFeatureEdges -angle 30 geometry.stl geometry.fms
 
 runApplication -overwrite "$(getApplication)"
+
 touch case.foam
+
+runApplication -overwrite checkMesh -allTopology -allGeometry
+runApplication -overwrite createPatch -overwrite
 
 #------------------------------------------------------------------------------
