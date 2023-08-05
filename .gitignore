@@ -6,3 +6,10 @@ polyMesh
 debug.vtk
 run
 postProcessing
+dynamicCode
+*.foam
+*.stl
+*.fms
+
+# Ignore every stl file EXCEPT FOR the ones in the 'rocketMesh/parts' folder
+!rocketMesh/parts/*.stl

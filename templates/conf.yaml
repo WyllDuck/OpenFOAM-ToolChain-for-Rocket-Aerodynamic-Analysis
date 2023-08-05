@@ -1,14 +1,14 @@
-mesh_file:            "/home/felix/sphereCases/sphereMesh/sphereBlockMeshCut/constant/polyMesh"
+mesh_file:            "/home/wyllduck/openfoam-data/sphereCases/rocketMesh/rocketCfMesh/constant/polyMesh"
 
-flowVelocity:         [408.3528, 0, 0]  # flow velocity [m/s]
-pressure:             101325        # static pressure [Pa]
-temperature:          288.15        # static temperature [K]
+flowVelocity:         [873.41, 0, 0]  # flow velocity [m/s]
+pressure:             9959.33         # static pressure [Pa]
+temperature:          216.65          # static temperature [K]
 
 # Force Coefficients - postProcessing
-Aref:                 0.001963495   # reference area [m2]
-lRef:                 0.1           # reference lenght [m]
+Aref:                 0.001282603306    # reference area [m2]
+lRef:                 1.35              # reference lenght [m]
 
 CofR:                 [0, 0, 0]     # centre of rotation for moment calculations
-liftDir:              [0, 0, 1]     # Lift direction
+liftDir:              [0, 1, 0]     # Lift direction
 dragDir:              [1, 0, 0]     # Drag direction
-pitchAxis:            [0, 1, 0]     # Pitch axis
+pitchAxis:            [0, 0, 1]     # Pitch axis
