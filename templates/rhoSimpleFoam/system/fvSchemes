@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2212                                 |
+|  \\    /   O peration     | Version:  v2306                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -14,28 +14,41 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-fluxScheme          Kurganov;
-
 ddtSchemes
 {
-    default         localEuler; // Euler for transient, Local Time Steping (localEuler) is faster
+    default         steadyState;
 }
 
 gradSchemes
 {
     default         Gauss linear;
+
+    limited         cellLimited Gauss linear 1;
+    grad(U)         $limited;
+    grad(k)         $limited;
+    grad(omega)     $limited;
+    grad(subsetU)   $limited;
 }
 
 divSchemes
 {
     default         none;
 
-    div(tauMC)      Gauss linear;
+    div(phi,U)      bounded Gauss linearUpwind limited;
 
-    // TURBULENCE KWSST
+    energy          bounded Gauss linearUpwind limited;
+    div(phi,e)      $energy;
+    div(phi,K)      $energy;
+    div(phi,Ekp)    $energy;
+
     turbulence      bounded Gauss upwind;
     div(phi,k)      $turbulence;
     div(phi,omega)  $turbulence;
+
+    div(phid,p)     Gauss upwind;
+    div((phi|interpolate(rho)),p)  bounded Gauss upwind;
+
+    div(((rho*nuEff)*dev2(T(grad(U)))))    Gauss linear;
 }
 
 laplacianSchemes
@@ -46,15 +59,6 @@ laplacianSchemes
 interpolationSchemes
 {
     default         linear;
-
-    reconstruct(rho)    vanLeer;
-    reconstruct(U)      vanLeerV;
-    reconstruct(T)      vanLeer;
-
-    // OPTION 2 more dissipative
-    // reconstruct(rho)    upwind;
-    // reconstruct(U)      upwind;
-    // reconstruct(T)      upwind;
 }
 
 snGradSchemes
@@ -62,10 +66,10 @@ snGradSchemes
     default         corrected;
 }
 
-
 wallDist
 {
     method          meshWave;
 }
+
 
 // ************************************************************************* //

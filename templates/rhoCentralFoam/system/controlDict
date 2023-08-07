@@ -32,7 +32,7 @@ writeInterval   500;
 
 purgeWrite      0;
 
-writeFormat     binary; // IMPORTANT for cfmesh latter!
+writeFormat     binary;
 
 writePrecision  15;
 

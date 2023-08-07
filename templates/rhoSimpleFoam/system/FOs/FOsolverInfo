@@ -6,18 +6,24 @@
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 
-MachNo1
+solverInfo1
 {
-    // Mandatory entries (unmodifiable)
-    type            MachNo;
-    libs            (fieldFunctionObjects);
+    // Mandatory entries
+    type            solverInfo;
+    libs            (utilityFunctionObjects);
+    fields          ( p U e k omega );
+    
+    // Optional entries
+    writeResidualFields    true;
 
     // Optional (inherited) entries
-    // field           <inpField>;
-    // result          <fieldResult>;
+    writePrecision   16;
+    writeToFile      true;
+    useUserTime      true;
+
     region          region0;
     enabled         true;
-    log             false;
+    log             true;
     // timeStart       0;
     // timeEnd         1000;
     executeControl  timeStep;
@@ -25,3 +31,6 @@ MachNo1
     writeControl    writeTime;
     writeInterval   -1;
 }
+
+
+// ************************************************************************* //
