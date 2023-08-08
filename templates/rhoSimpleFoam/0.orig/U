@@ -9,58 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volVectorField;
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+#include        "include/initialConditions"
 
-startFrom       latestTime;
+dimensions      [0 1 -1 0 0 0 0];
 
-startTime       0;
+internalField   uniform $flowVelocity;
 
-stopAt          endTime;
-
-endTime         40000;
-
-deltaT          1;
-
-writeControl    adjustableRunTime;
-
-writeInterval   500;
-
-purgeWrite      0;
-
-writeFormat     binary;
-
-writePrecision  15;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
-
-maxDeltaT       5e-7;
-
-functions
+boundaryField
 {
+    wallPatch
+    {
+        type            noSlip;
+    }
 
-    #include "FOs/FOsolverInfo"
-    #include "FOs/FOforceCoeffs"
+    inletPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
 
-    #include "FOs/FOyPlus"
-    #include "FOs/FOCourantNo"
-    #include "FOs/FOMach"
-    #include "FOs/FOwallShearStress"
+    outletPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
 
+    farFieldPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
+
+    symmetryPatch
+    {
+        type            symmetry; // symmetryPlane might cause problems if the surface is not perfectly flat 
+    }
 }
 
 // ************************************************************************* //

@@ -1,0 +1,18 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+MESH_DIR={{ mesh_file }}
+
+mkdir constant
+cp -r $MESH_DIR constant
+touch case.foam
+
+restore0Dir
+
+runApplication decomposePar
+
+runParallel -append "$(getApplication)"
+
+#------------------------------------------------------------------------------

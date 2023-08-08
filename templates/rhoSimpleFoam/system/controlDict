@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+application     rhoSimpleFoam;
 
 startFrom       latestTime;
 
@@ -26,7 +26,7 @@ endTime         40000;
 
 deltaT          1;
 
-writeControl    adjustableRunTime;
+writeControl    timeStep;
 
 writeInterval   500;
 
@@ -43,12 +43,6 @@ timeFormat      general;
 timePrecision   6;
 
 runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
-
-maxDeltaT       5e-7;
 
 functions
 {

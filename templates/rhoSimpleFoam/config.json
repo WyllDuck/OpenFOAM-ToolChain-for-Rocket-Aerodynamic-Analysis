@@ -1,0 +1,32 @@
+{
+    "mesh_file": "/data/sphereCases/rocketMesh/rocketCfMesh/constant/polyMesh",
+    "flowVelocity": [
+        195.33,
+        0,
+        0
+    ],
+    "pressure": 63665.02,
+    "temperature": 263.71,
+    "Aref": 0.001282603306,
+    "lRef": 1.35,
+    "CofR": [
+        0,
+        0,
+        0
+    ],
+    "liftDir": [
+        0,
+        1,
+        0
+    ],
+    "dragDir": [
+        1,
+        0,
+        0
+    ],
+    "pitchAxis": [
+        0,
+        0,
+        1
+    ]
+}

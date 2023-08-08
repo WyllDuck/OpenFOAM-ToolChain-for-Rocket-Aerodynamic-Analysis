@@ -10,57 +10,39 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      thermophysicalProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
-
-startFrom       latestTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         40000;
-
-deltaT          1;
-
-writeControl    adjustableRunTime;
-
-writeInterval   500;
-
-purgeWrite      0;
-
-writeFormat     binary;
-
-writePrecision  15;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
-
-maxDeltaT       5e-7;
-
-functions
+thermoType
 {
-
-    #include "FOs/FOsolverInfo"
-    #include "FOs/FOforceCoeffs"
-
-    #include "FOs/FOyPlus"
-    #include "FOs/FOCourantNo"
-    #include "FOs/FOMach"
-    #include "FOs/FOwallShearStress"
-
+    type            hePsiThermo;
+    mixture         pureMixture;
+    transport       sutherland;
+    thermo          hConst;
+    equationOfState perfectGas;
+    specie          specie;
+    energy          sensibleInternalEnergy;
 }
+
+mixture
+{
+    specie
+    {
+        molWeight       28.01348;
+    }
+    thermodynamics
+    {
+        Cp              1004.4;
+        Hf              0;
+    }
+    transport
+    {
+        As              1.458e-06;
+        Ts              110;
+        Pr              0.72;
+    }
+}
+
 
 // ************************************************************************* //
