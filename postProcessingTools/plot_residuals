@@ -1,0 +1,19 @@
+set logscale y
+set title "Flowspeed (Ux, Uy, Uz) Residuals"
+set ylabel "residual values"
+set xlabel "nº of iteration (or time [sec])"
+
+set grid
+set key top left autotitle columnhead
+set datafile commentschar '#'
+
+plot 	"postProcessing/solverInfo1/0/solverInfo_plot.dat" using "Time":"Ux_initial" title 'Ux' with lines,\
+		"postProcessing/solverInfo1/0/solverInfo_plot.dat" using "Time":"Uy_initial" title 'Uy' with lines,\
+		"postProcessing/solverInfo1/0/solverInfo_plot.dat" using "Time":"Uz_initial" title 'Uz' with lines,\
+		"postProcessing/solverInfo1/0/solverInfo_plot.dat" using "Time":"e_initial" title 'e' with lines
+pause 1
+reread
+
+pause 1
+reread
+### end of code
