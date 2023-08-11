@@ -30,7 +30,7 @@ boundaryField
     inletPatch
     {
         type            uniformFixedValue;
-        value           $internalField;
+        uniformValue    $internalField;
     }
 
     outletPatch
@@ -41,7 +41,7 @@ boundaryField
     farFieldPatch
     {
         type            uniformFixedValue;
-        value           $internalField;
+        uniformValue    $internalField;
     }
 
     symmetryPatch

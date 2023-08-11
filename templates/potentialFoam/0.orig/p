@@ -27,8 +27,7 @@ boundaryField
 
     inletPatch
     {
-        type            fixedValue;
-        value           uniform 0;
+        type            zeroGradient;
     }
 
     outletPatch
@@ -39,8 +38,7 @@ boundaryField
 
     farFieldPatch
     {
-        type            fixedValue;
-        value           uniform 0;
+        type            zeroGradient;
     }
 
     symmetryPatch
