@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+fluxScheme          Kurganov;
+
+ddtSchemes
+{
+    default         localEuler; // Euler for transient, Local Time Steping (localEuler) is faster
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+
+    div(tauMC)      Gauss linear;
+
+    // TURBULENCE KWSST
+    turbulence      bounded Gauss upwind;
+    div(phi,k)      $turbulence;
+    div(phi,omega)  $turbulence;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+
+    reconstruct(rho)    vanLeer;
+    reconstruct(U)      vanLeerV;
+    reconstruct(T)      vanLeer;
+
+    // OPTION 2 more dissipative
+    // reconstruct(rho)    upwind;
+    // reconstruct(U)      upwind;
+    // reconstruct(T)      upwind;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+
+wallDist
+{
+    method          meshWave;
+}
+
+// ************************************************************************* //

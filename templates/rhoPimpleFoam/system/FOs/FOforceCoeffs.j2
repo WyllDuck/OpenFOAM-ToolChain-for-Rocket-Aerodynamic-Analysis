@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+forceCoeffs1
+{
+    // Mandatory entries
+    type            forceCoeffs;
+    libs            ("libforces.so");
+    patches         (wallPatch);
+
+
+    // Optional entries
+
+    // Field names
+    p               p;
+    U               U;
+    rho             rho;
+    rhoInf          1;
+
+    // Reference pressure [Pa]
+    pRef            {{ pressure }};
+
+    // Include porosity effects?
+    porosity        no;
+
+    // Store and write volume field representations of forces and moments
+    writeFields     no;
+
+    // Centre of rotation for moment calculations
+    CofR            {{ "({} {} {})".format(CofR[0], CofR[1], CofR[2]) }};
+
+    // Lift direction
+    liftDir         {{ "({} {} {})".format(liftDir[0], liftDir[1], liftDir[2]) }};
+
+    // Drag direction
+    dragDir         {{ "({} {} {})".format(dragDir[0], dragDir[1], dragDir[2]) }};
+
+    // Pitch axis
+    pitchAxis       {{ "({} {} {})".format(pitchAxis[0], pitchAxis[1], pitchAxis[2]) }};
+
+    // Freestream velocity magnitude [m/s]
+    magUInf         {{ (flowVelocity[0]**2 + flowVelocity[1]**2 + flowVelocity[2]**2)**0.5 }};
+
+    // Reference length [m]
+    lRef            {{ lRef }};
+
+    // Reference area [m2]
+    Aref            {{ Aref }};
+
+    // Spatial data binning
+    // - extents given by the bounds of the input geometry
+    binData
+    {
+        nBin        20;
+        direction   (1 0 0);
+        cumulative  yes;
+    }
+}
