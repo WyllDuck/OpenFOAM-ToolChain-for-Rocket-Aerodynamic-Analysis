@@ -4,9 +4,7 @@ cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
 MESH_DIR={{ mesh_file }}
-
-#MAP_DIR="/home/felix/sphereCases/run/rhoCentralFoam2"
-#TIME=0.00404996
+MAP_DIR={{ map_file }}
 
 mkdir constant
 cp -r $MESH_DIR constant
@@ -14,7 +12,7 @@ touch case.foam
 
 restore0Dir
 
-# runApplication mapFields $MAP_DIR -sourceTime $TIME
+runApplication mapFields $MAP_DIR -sourceTime latestTime -parallelSource -mapMethod mapNearest
 runApplication decomposePar
 
 runParallel -append "$(getApplication)"
