@@ -1,0 +1,22 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+MESH_DIR={{ mesh_file }}
+
+#MAP_DIR="/home/felix/sphereCases/run/rhoCentralFoam2"
+#TIME=0.00404996
+
+mkdir constant
+cp -r $MESH_DIR constant
+touch case.foam
+
+restore0Dir
+
+# runApplication mapFields $MAP_DIR -sourceTime $TIME
+runApplication decomposePar
+
+runParallel -append "$(getApplication)"
+
+#------------------------------------------------------------------------------
