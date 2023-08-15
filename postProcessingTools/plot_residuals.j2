@@ -1,0 +1,15 @@
+set logscale y
+set title "Residuals"
+set ylabel "Residuals"
+set xlabel "nº of iteration (or time [sec])"
+
+set grid
+set key top left autotitle columnhead
+set datafile commentschar '#'
+
+{% set columns = columns.split(' ') %}
+plot {% for elem in columns %} "tables/solverInfo_plot.dat" using "Time":"{{ elem }}" title '{{ elem|replace('_', ' ')|escape }}' with lines, {% endfor %}
+
+pause 1
+reread
+### end of code
