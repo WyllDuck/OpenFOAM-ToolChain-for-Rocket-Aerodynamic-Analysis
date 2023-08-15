@@ -219,15 +219,15 @@ boundaryLayers
     {
         body_rocket
         {
-                nLayers 20;
+                nLayers 25;
         }
         aft_detail_rest
         {
-                nLayers 20;
+                nLayers 25;
         }
         aft_detail_top
         {
-                nLayers 20;
+                nLayers 25;
         }
     }
     
