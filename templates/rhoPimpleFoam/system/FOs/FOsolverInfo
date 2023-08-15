@@ -16,6 +16,9 @@ solverInfo1
         rho
         e
         U
+        p
+        k
+        omega
     )
 
     // Optional entries

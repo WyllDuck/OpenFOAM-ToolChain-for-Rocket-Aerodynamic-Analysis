@@ -1,0 +1,41 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+runTimeControl1
+{
+    type            runTimeControl;
+    libs            ("libutilityFunctionObjects.so");
+    conditions
+    {
+        condition0
+        {
+            type            average;
+            functionObject  forceCoeffs1;
+            fields          (Cd Cl);
+            tolerance       1e-3;
+            window          20;
+            base            iter;
+            windowType      approximate;
+            groupID         1;
+        }
+        condition1
+        {
+            type            equationInitialResidual;
+            fields          (   rho
+                                e
+                                U
+                                p
+                                k
+                                omega               
+                            );
+            value           1e-04;
+            mode            minimum;
+            groupID         1;
+        }
+    }
+}

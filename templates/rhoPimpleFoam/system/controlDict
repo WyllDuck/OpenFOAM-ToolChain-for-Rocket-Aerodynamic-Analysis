@@ -26,13 +26,13 @@ endTime         40000;
 
 deltaT          1;
 
-writeControl    adjustableRunTime;
+writeControl    adjustable;
 
-writeInterval   500;
+writeInterval   50;
 
 purgeWrite      0;
 
-writeFormat     binary;
+writeFormat     ascii;
 
 writePrecision  8;
 
@@ -43,12 +43,6 @@ timeFormat      general;
 timePrecision   6;
 
 runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
-
-maxDeltaT       5e-7;
 
 functions
 {
