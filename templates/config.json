@@ -1,6 +1,6 @@
 {
-    "mesh_file": "/data/sphereCases/rocketMesh/rocketShort_noFinSupport/constant/polyMesh",
-    "map_file": "/data/sphereCases/run/rhoCentralFoamMa1.2_rocketShort_noFinSupport",
+    "mesh_file": "/home/felix/openfoam-data/sphereCases/rocketMesh/rocketShort_noFinSupport/constant/polyMesh",
+    "map_file": "none",
     "flowVelocity": [
         359.0844262407505,
         0,

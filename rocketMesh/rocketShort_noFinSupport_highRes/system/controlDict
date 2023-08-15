@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoPimpleFoam;
+application     cartesianMesh;
 
 startFrom       latestTime;
 
@@ -22,19 +22,19 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         40000;
+endTime         1;
 
 deltaT          1;
 
-writeControl    adjustable;
+writeControl    timeStep;
 
-writeInterval   50;
+writeInterval   1;
 
 purgeWrite      0;
 
-writeFormat     ascii;
+writeFormat     binary;
 
-writePrecision  8;
+writePrecision  15;
 
 writeCompression off;
 
@@ -43,18 +43,5 @@ timeFormat      general;
 timePrecision   6;
 
 runTimeModifiable true;
-
-functions
-{
-
-    #include "FOs/FOsolverInfo"
-    #include "FOs/FOforceCoeffs"
-
-    #include "FOs/FOyPlus"
-    #include "FOs/FOCourantNo"
-    #include "FOs/FOMach"
-    #include "FOs/FOwallShearStress"
-
-}
 
 // ************************************************************************* //
