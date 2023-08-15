@@ -28,7 +28,7 @@ AFT_LENGTH 0.09271;
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 surfaceFile "geometry.fms";
-maxCellSize 0.5;
+maxCellSize 0.6;
 // boundaryCellSize 0.5;
 // boundaryCellSizeRefinementThickness 0.5;
 // minCellSize 0.0001;
@@ -36,40 +36,34 @@ maxCellSize 0.5;
 // Refine the patches within the mesh
 localRefinement
 {
-    aft_detail_rest
+    aft_detail
     {
         additionalRefinementLevels 11;
         refinementThickness 0.001;
     }
 
-    aft_detail_top
-    {
-        additionalRefinementLevels 13;
-        refinementThickness 0.0002;
-    }
-
     body_rocket
     {
-        additionalRefinementLevels 9;
-        refinementThickness 0.0003;
+        additionalRefinementLevels 8;
+        refinementThickness 0.003;
     }
 }
 
 objectRefinements
 {
-    
-    refinementSkin
-    {
-        type        box;
-        additionalRefinementLevels 8;  
+
+    // refinementBase
+    // {
+    //     type        box;
+    //     additionalRefinementLevels 1;  
         
-        centre      (#calc "$LENGTH / 2 + $ROUND_TIP_X" 0.0 0.0);
+    //     centre      (0.0 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 1.2";
-        lengthY     #calc "$DIAMETER * 1.35";
-        lengthZ     #calc "$DIAMETER * 1.35";
+    //     lengthX     100;
+    //     lengthY     100;
+    //     lengthZ     100;
         
-    }
+    // }
 
     refinement0
     {
@@ -193,9 +187,8 @@ renameBoundary
 	
 	newPatchNames
 	{
-		body_rocket         {newName wall; type wall;}
-        aft_detail_rest     {newName wall; type wall;}
-        aft_detail_top      {newName wall; type wall;}
+		body_rocket     {newName wall; type wall;}
+        aft_detail      {newName wall; type wall;}
 		
         xMin            {newName inlet; type patch;}
 		xMax            {newName outlet; type patch;}
@@ -213,7 +206,7 @@ renameBoundary
 boundaryLayers 
 {
     
-    thicknessRatio 1.25;
+    thicknessRatio 1.4;
     nLayers 0;
 
     // allowDiscontinuity 0;
@@ -222,15 +215,12 @@ boundaryLayers
     {
         body_rocket
         {
-                nLayers 20;
+            nLayers 15;
         }
-        aft_detail_rest
+
+        aft_detail
         {
-                nLayers 20;
-        }
-        aft_detail_top
-        {
-                nLayers 20;
+            nLayers 15;
         }
     }
     

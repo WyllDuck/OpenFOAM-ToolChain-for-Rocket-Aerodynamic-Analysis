@@ -207,6 +207,8 @@ boundaryLayers
 {
     
     thicknessRatio 1.25;
+    nLayers 0;
+
     // allowDiscontinuity 0;
     
     patchBoundaryLayers
