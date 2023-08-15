@@ -9,15 +9,17 @@ echo "Project Template Folder: " $PROJECT_FOLDER
 echo "Project Output Folder: " $OUTPUT_PROJECT_FOLDER
 
 # copy template in 'run' folder and change directory
-cp -r $PROJECT_FOLDER ../run/$OUTPUT_PROJECT_FOLDER
+cp -r $PROJECT_FOLDER $OUTPUT_PROJECT_FOLDER
 
 # replace default configuration file in template repository with the used configuration file
-cp $CONFIG ../run/$OUTPUT_PROJECT_FOLDER/config.yaml
+cp $CONFIG $OUTPUT_PROJECT_FOLDER/config.json
 
 # find all 'jinja' templates and set fixed values from the configuration file 
-cd ../run/$OUTPUT_PROJECT_FOLDER
+cd $OUTPUT_PROJECT_FOLDER
 for filename in $(find . -type f | grep ".j2")
 do
-    jinja2 $filename config.yaml -o "${filename%.*}" # NOTE: last command removes '.j2' (the file type name)
+    jinja2 $filename config.json -o "${filename%.*}" --format=json # NOTE: last command removes '.j2' (the file type name)
     rm $filename # Template no longer requiered, remove it
 done
+
+ chmod +x All* # make scripts executable (Allrun, Allclean, etc.)

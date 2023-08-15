@@ -1,0 +1,8 @@
+{
+    "mesh_file": "/data/sphereCases/rocketMesh/rocketShort_noFinSupport/constant/polyMesh",
+    "flowVelocity": [
+        873.41,
+        0,
+        0
+    ]
+}

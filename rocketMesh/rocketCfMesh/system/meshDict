@@ -1,0 +1,370 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "mesh";
+    object      meshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+LENGTH 1.35;
+DIAMETER 0.06;
+
+ROUND_TIP_X 0.00804;
+ROUND_TIP_R 0.00155;
+
+NOSE_LENGTH 0.26;
+POS_AFT_CENTER_X 1.3;
+AFT_LENGTH 0.08;
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+surfaceFile "geometry.fms";
+maxCellSize 0.5;
+// boundaryCellSize 0.5;
+// boundaryCellSizeRefinementThickness 0.5;
+// minCellSize 0.0001;
+
+// Refine the patches within the mesh
+localRefinement
+{
+    fin_support_corner_top
+    {
+        additionalRefinementLevels 12;
+        refinementThickness 0.0005;
+    }
+
+    fin_support_corner_bottom
+    {
+        additionalRefinementLevels 13;
+        refinementThickness 0.0001;
+    }
+
+    fin_support
+    {
+        additionalRefinementLevels 10;
+        refinementThickness 0.003;
+    }
+
+    aft_detail
+    {
+        additionalRefinementLevels 11;
+        refinementThickness 0.001;
+    }
+}
+
+
+// Refine region 
+// surfaceMeshRefinement
+// {
+//     domain
+//     {
+//         surfaceFile innerCylinderSmall.stl;
+//         additionalRefinementLevels 1;
+//         refinementThickness 10;
+//     }
+// }
+
+objectRefinements
+{
+    refinement0
+    {
+        type        box;
+        additionalRefinementLevels 3;  
+        
+        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        
+        lengthX     #calc "$LENGTH * 3";
+        lengthY     #calc "$DIAMETER * 30";
+        lengthZ     #calc "$DIAMETER * 30";
+        
+    }
+
+    refinement1
+    {
+        type        box;
+        additionalRefinementLevels 5;  
+        
+        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        
+        lengthX     #calc "$LENGTH * 2";
+        lengthY     #calc "$DIAMETER * 12";
+        lengthZ     #calc "$DIAMETER * 12";
+        
+    }
+
+    refinement2
+    {
+        type        box;
+        additionalRefinementLevels 7;  
+        
+        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        
+        lengthX     #calc "$LENGTH * 1.2";
+        lengthY     #calc "$DIAMETER * 3";
+        lengthZ     #calc "$DIAMETER * 3";
+        
+    }
+
+
+    nose_lenght1
+    {
+        type        box;
+        additionalRefinementLevels 7;  
+        
+        centre      (#calc "$NOSE_LENGTH * 0.4" 0.0 0.0);
+        
+        lengthX     #calc "$NOSE_LENGTH * 1.2";
+        lengthY     #calc "$DIAMETER * 1.5";
+        lengthZ     #calc "$DIAMETER * 1.5";
+        
+    }
+
+    nose_lenght2
+    {
+        type        box;
+        additionalRefinementLevels 8;  
+        
+        centre      (#calc "$NOSE_LENGTH * 0.2" 0.0 0.0);
+        
+        lengthX     #calc "$NOSE_LENGTH * 0.7";
+        lengthY     #calc "$DIAMETER";
+        lengthZ     #calc "$DIAMETER";
+        
+    }
+
+    nose_lenght3
+    {
+        type        box;
+        additionalRefinementLevels 9;  
+        
+        centre      (#calc "$NOSE_LENGTH * 0.15" 0.0 0.0);
+        
+        lengthX     #calc "$NOSE_LENGTH * 0.3";
+        lengthY     #calc "$DIAMETER * 0.6";
+        lengthZ     #calc "$DIAMETER * 0.6";
+        
+    }
+    
+    nose_tip1
+    {
+        type        sphere;
+        additionalRefinementLevels 10;
+
+        centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
+
+        radius      #calc "$ROUND_TIP_R * 3";
+    }
+
+    aft_lenght1
+    {
+        type        box;
+        additionalRefinementLevels 8;
+        
+        centre      (#calc "$POS_AFT_CENTER_X" 0.0 0.0);
+        
+        lengthX     #calc "$AFT_LENGTH * 2";
+        lengthY     #calc "$DIAMETER * 1.7";
+        lengthZ     #calc "$DIAMETER * 1.7";
+        
+    }
+
+    aft_lenght2
+    {
+        type        box;
+        additionalRefinementLevels 9;
+        
+        centre      (#calc "$POS_AFT_CENTER_X" 0.0 0.0);
+        
+        lengthX     #calc "$AFT_LENGTH * 1.5";
+        lengthY     #calc "$DIAMETER * 1.4";
+        lengthZ     #calc "$DIAMETER * 1.4";
+        
+    }
+
+    wake_refinement
+    {
+
+        type        box;
+        additionalRefinementLevels 5;
+        
+        centre      (2.3 0.0 0.0);
+        
+        lengthX     1.6;
+        lengthY     #calc "$DIAMETER * 15";
+        lengthZ     #calc "$DIAMETER * 15";
+       
+    }
+
+    wake_refinement2
+    {
+
+        type        box;
+        additionalRefinementLevels 3;
+        
+        centre      (3.5 0.0 0.0);
+        
+        lengthX     4.0;
+        lengthY     #calc "$DIAMETER * 30";
+        lengthZ     #calc "$DIAMETER * 30";
+       
+    }
+}
+
+// Join separate patches in just one propellerTip
+renameBoundary
+{
+	
+	newPatchNames
+	{
+		body            {newName wall; type wall;}
+        aft_detail      {newName wall; type wall;}
+		
+        fin_support                 {newName wall; type wall;}
+        fin_support_corner_bottom   {newName wall; type wall;}
+        fin_support_corner_top      {newName wall; type wall;}
+		
+        xMin            {newName inlet; type patch;}
+		xMax            {newName outlet; type patch;}
+
+        yMin            {newName symmetry; type patch;}
+		yMax            {newName far_field; type patch;}
+        
+        zMin            {newName far_field; type patch;}
+		zMax            {newName far_field; type patch;}
+	}
+
+}
+
+// Refine the edge features of the mesh
+// edgeMeshRefinement
+// {
+//     edge1
+//     {
+//         edgeFile "constant/triSurface/propellerTip.eMesh";
+//         additionalRefinementLevels 6;
+//         //cellSize 0.005;
+//         refinementThickness 0.000001;
+//     }
+// }
+
+// Add inflation layers to the patches
+boundaryLayers 
+{
+    
+    thicknessRatio 1.2;
+    // allowDiscontinuity 0;
+    
+    patchBoundaryLayers
+    {
+        body
+        {
+            nLayers 20;
+        }
+
+        fin_support
+        {
+            nLayers 20;
+        }
+        fin_support_corner_bottom
+        {
+            nLayers 20;
+        }
+        fin_support_corner_top
+        {
+            nLayers 20;
+        }
+
+        aft_detail
+        {
+            nLayers 20;
+        }
+    }
+    
+    optimiseLayer 1;
+    // untangleLayers 0;
+
+    optimisationParameters
+    {
+        nSmoothNormals 5;
+        maxNumIterations 5;
+        featureSizeFactor 0.3;
+        reCalculateNormals 1;
+        relThicknessTol 0.03;
+        
+    } 
+            
+}
+
+/*
+
+meshQualitySettings
+{
+    //- Maximum non-orthogonality allowed. Set to 180 to disable.
+    maxNonOrtho 65;
+
+    //- Max skewness allowed. Set to <0 to disable.
+    maxSkewness 2;
+}
+
+/*meshQualitySettings
+{
+    //- Maximum non-orthogonality allowed. Set to 180 to disable.
+    maxNonOrtho 65;
+
+    //- Max skewness allowed. Set to <0 to disable.
+    maxBoundarySkewness 4;
+    maxInternalSkewness 4;
+
+    //- Max concaveness allowed. Is angle (in degrees) below which concavity
+    //  is allowed. 0 is straight face, <0 would be convex face.
+    //  Set to 180 to disable.
+    //maxConcave 80;
+
+    //- Minimum pyramid volume. Is absolute volume of cell pyramid.
+    //  Set to a sensible fraction of the smallest cell volume expected.
+    //  Set to very negative number (e.g. -1E30) to disable.
+    //minVol 1e-13;
+
+    //- Minimum quality of the tet formed by the face-centre
+    //  and variable base point minimum decomposition triangles and
+    //  the cell centre. This has to be a positive number for tracking
+    //  to work. Set to very negative number (e.g. -1E30) to
+    //  disable.
+    //     <0 = inside out tet,
+    //      0 = flat tet
+    //      1 = regular tet
+    //minTetQuality -1e30; // 1e-30;
+
+    //- Minimum face area. Set to <0 to disable.
+    //minArea -1;
+
+    //- Minimum face twist. Set to <-1 to disable. dot product of face normal
+    //  and face centre triangles normal
+    //minTwist 0.01;
+
+    //- Minimum normalised cell determinant
+    //  1 = hex, <= 0 = folded or flattened illegal cell
+    //minDeterminant 0.001;
+
+    //- minFaceWeight (0 -> 0.5)
+    //minFaceWeight 0.05;
+
+    //- minVolRatio (0 -> 1)
+    //minVolRatio 0.01;
+
+    //must be >0 for Fluent compatibility
+    //minTriangleTwist -1;
+}
+
+
+
+*/

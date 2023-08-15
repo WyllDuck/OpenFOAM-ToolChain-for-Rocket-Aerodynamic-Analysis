@@ -1,6 +1,6 @@
 set logscale y
-set title "Flowspeed (Ux, Uy, Uz) Residuals"
-set ylabel "residual values"
+set title "Residuals"
+set ylabel "Residuals"
 set xlabel "nº of iteration (or time [sec])"
 
 set grid

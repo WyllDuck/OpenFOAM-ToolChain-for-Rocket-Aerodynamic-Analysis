@@ -28,19 +28,19 @@ deltaT          1;
 
 writeControl    adjustableRunTime;
 
-writeInterval   500;
+writeInterval   50;
 
 purgeWrite      0;
 
-writeFormat     binary; // IMPORTANT for cfmesh latter!
+writeFormat     binary;
 
-writePrecision  15;
+writePrecision  6;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   10;
 
 runTimeModifiable true;
 
@@ -61,6 +61,7 @@ functions
     #include "FOs/FOMach"
     #include "FOs/FOwallShearStress"
 
+    #include "fileUpdater"
 }
 
 // ************************************************************************* //
