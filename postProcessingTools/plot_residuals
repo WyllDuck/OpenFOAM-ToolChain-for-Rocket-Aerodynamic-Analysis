@@ -7,13 +7,8 @@ set grid
 set key top left autotitle columnhead
 set datafile commentschar '#'
 
-plot 	"tables/solverInfo_plot.dat" using "Time":"Ux_initial" title 'Ux' with lines,\
-		"tables/solverInfo_plot.dat" using "Time":"Uy_initial" title 'Uy' with lines,\
-		"tables/solverInfo_plot.dat" using "Time":"Uz_initial" title 'Uz' with lines,\
-		"tables/solverInfo_plot.dat" using "Time":"rho_initial" title 'rho' with lines,\
-		"tables/solverInfo_plot.dat" using "Time":"e_initial" title 'e' with lines
-pause 1
-reread
+
+plot  "tables/solverInfo_plot.dat" using "Time":"rho_initial" title 'rho initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"Ux_initial" title 'Ux initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"Uy_initial" title 'Uy initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"Uz_initial" title 'Uz initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"k_initial" title 'k initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"p_initial" title 'p initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"e_initial" title 'e initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"omega_initial" title 'omega initial' with lines,  "tables/solverInfo_plot.dat" using "Time":"" title '' with lines, 
 
 pause 1
 reread

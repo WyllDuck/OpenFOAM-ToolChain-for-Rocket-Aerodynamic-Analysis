@@ -1,5 +1,19 @@
-tail -n +13 $1 > tables/forceCoeffs_plot2.dat
-sed 's/#//g' tables/forceCoeffs_plot2.dat > tables/forceCoeffs_plot.dat
-rm tables/forceCoeffs_plot2.dat
+mkdir -p tables
 
-gnuplot plot_forceCoeffs
+touch tables/forceCoeffs_plot.dat
+gnuplot plot_forceCoeffs &
+
+(
+    trap printout SIGINT
+    printout() {
+        echo ""
+        exit
+    }
+    while :
+    do
+        tail -n +13 $1 | sed -e '/Time/ s/#//g' > tables/forceCoeffs_plot.dat
+        sleep 10
+    done
+)
+
+echo "Finishing script"
