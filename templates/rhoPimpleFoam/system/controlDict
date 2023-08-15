@@ -55,6 +55,8 @@ functions
     #include "FOs/FOMach"
     #include "FOs/FOwallShearStress"
 
+    #include "FOs/FOrunTimeControl"
+
 }
 
 // ************************************************************************* //
