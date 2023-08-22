@@ -12,9 +12,13 @@ touch case.foam
 
 restore0Dir
 
-runApplication mapFields $MAP_DIR -sourceTime latestTime -parallelSource -mapMethod mapNearest
+{% if map_file != "none" %}
+{{ "runApplication mapFields $MAP_DIR -sourceTime latestTime -parallelSource -mapMethod mapNearest" }}
+{% endif %}
+
 runApplication decomposePar
 
 runParallel -append "$(getApplication)"
 
+runApplication reconstructPar -latestTime 
 #------------------------------------------------------------------------------

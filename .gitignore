@@ -13,5 +13,6 @@ dynamicCode
 *.fms
 *.hdf
 
-# Ignore every stl file EXCEPT FOR the ones in the 'rocketMesh/parts' folder
-#!rocketMesh/parts/*.stl
+
+# Ignore every stl file EXCEPT FOR the ones in the 'rocketMesh/___/___/parts' folder
+!rocketMesh/rocketShort/noFinSupport/parts/*.stl

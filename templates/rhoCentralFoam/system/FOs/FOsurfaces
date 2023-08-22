@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+surfaces1
+{
+    type            surfaces;
+    libs            (sampling);
+
+    surfaceFormat   vtk;
+
+
+    interpolationSchemes
+    {
+        default         none;
+    }
+
+    surfaces
+    {
+        mySurface1
+        {
+            type        cuttingPlane;
+            point       (0 0 0);
+            normal      (0 1 0);
+        }
+    }
+}
+
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+surfaces1
+{
+    type            surfaces;
+    libs            (sampling);
+    
+    writeControl    writeTime;
+    writeInterval   -1;
+
+    surfaceFormat   vtk;
+    fields          (p U T rho Ma yPlus wallShearStress);
+
+    // interpolationScheme cellPoint;  //<- default
+
+    surfaces
+    {
+        planeXZ
+        {
+            type            patch;
+            patches         ("symmetryPatch");
+            interpolate     true;
+            invariant       true;  // Unaffected by mesh motion
+        }
+    }
+}
+
+
+// ************************************************************************* //

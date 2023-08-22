@@ -1,13 +1,13 @@
 {
-    "mesh_file": "/home/felix/openfoam-data/sphereCases/rocketMesh/rocketShort_noFinSupport/constant/polyMesh",
-    "map_file": "none",
+    "mesh_file": "/home/felix/openfoam-data/sphereCases/rocketMesh/rocketShort/noFinSupport/6M_20L/constant/polyMesh",
+    "map_file": "/home/felix/openfoam-data/sphereCases/run/rhoCentralFoamMa4.63_R3",
     "flowVelocity": [
-        359.0844262407505,
+        1366.1839528899507,
         0,
         0
     ],
-    "pressure": 25538.748,
-    "temperature": 222.80911999999998,
+    "pressure": 6368.735599999999,
+    "temperature": 216.64999999999998,
     "Aref": 0.001282603306,
     "lRef": 1.04013,
     "CofR": [

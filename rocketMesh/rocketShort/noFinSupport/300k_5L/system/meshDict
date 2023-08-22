@@ -224,7 +224,7 @@ boundaryLayers
         }
     }
     
-    optimiseLayer 1;
+    optimiseLayer 0;
     // untangleLayers 0;
 
     optimisationParameters
