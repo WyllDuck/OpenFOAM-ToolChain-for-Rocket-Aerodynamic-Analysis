@@ -29,8 +29,7 @@ boundaryField
 
     inletPatch
     {
-        type            inletOutlet;
-        inletValue      $internalField;
+        type            fixedValue;
         value           $internalField;
     }
 

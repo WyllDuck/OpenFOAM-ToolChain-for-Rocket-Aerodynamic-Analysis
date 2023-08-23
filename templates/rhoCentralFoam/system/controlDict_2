@@ -46,9 +46,9 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.2;
+maxCo           0.5;
 
-maxDeltaT       2e-11;
+maxDeltaT       1;
 
 functions
 {
@@ -62,7 +62,6 @@ functions
     #include "FOs/FOwallShearStress"
 
     #include "FOs/FOsurfaces"
-    #include "FOs/FOrunTimeControl"
 
     #include "fileUpdater"
 

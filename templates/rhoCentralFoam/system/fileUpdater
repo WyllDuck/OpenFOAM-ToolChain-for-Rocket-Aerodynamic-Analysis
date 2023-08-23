@@ -17,18 +17,7 @@ fileUpdate1
     timeVsFile
     (
         (-1  "$FOAM_CASE/system/controlDict_1")
-        (20 "$FOAM_CASE/system/controlDict_2")  
-        (40 "$FOAM_CASE/system/controlDict_3")  
-        (60 "$FOAM_CASE/system/controlDict_4")
-        (80 "$FOAM_CASE/system/controlDict_5")
-        (100 "$FOAM_CASE/system/controlDict_6")
-        (120 "$FOAM_CASE/system/controlDict_7")
-        (140 "$FOAM_CASE/system/controlDict_8")
-        (160 "$FOAM_CASE/system/controlDict_9")
-        (180 "$FOAM_CASE/system/controlDict_10")
-        (200 "$FOAM_CASE/system/controlDict_11")
-        (220 "$FOAM_CASE/system/controlDict_12")
-        (240 "$FOAM_CASE/system/controlDict_13")
-        (260 "$FOAM_CASE/system/controlDict_14")
+        (200 "$FOAM_CASE/system/controlDict_2")  
+        (400 "$FOAM_CASE/system/controlDict_3")  
     );
 }

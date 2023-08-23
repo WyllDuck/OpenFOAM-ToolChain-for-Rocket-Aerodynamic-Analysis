@@ -13,9 +13,7 @@ solverInfo1
     libs            (utilityFunctionObjects);
     fields
     (
-        rho
-        e
-        U
+        U e k omega rho rhoE rhoU
     )
 
     // Optional entries

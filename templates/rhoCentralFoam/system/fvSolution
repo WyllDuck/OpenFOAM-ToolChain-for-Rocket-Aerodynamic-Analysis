@@ -41,7 +41,7 @@ solvers
     {
         solver          PBiCGStab;
         preconditioner  DILU;
-        tolerance       1e-6;
+        tolerance       1e-12;
         relTol          0.1;
     }
 }

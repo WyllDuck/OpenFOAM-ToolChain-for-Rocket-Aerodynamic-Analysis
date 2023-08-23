@@ -6,6 +6,7 @@
         0,
         0
     ],
+    "nprocessors": 16,
     "pressure": 25538.748,
     "temperature": 222.80911999999998,
     "Aref": 0.001282603306,

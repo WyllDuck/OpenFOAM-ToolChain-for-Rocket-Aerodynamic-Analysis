@@ -18,7 +18,7 @@ runTimeControl1
             functionObject  forceCoeffs1;
             fields          (Cd Cl);
             tolerance       1e-3;
-            window          20;
+            window          120;
             base            iter;
             windowType      approximate;
             groupID         1;
@@ -26,14 +26,8 @@ runTimeControl1
         condition1
         {
             type            equationInitialResidual;
-            fields          (   rho
-                                e
-                                U
-                                p
-                                k
-                                omega               
-                            );
-            value           1e-04;
+            fields          ( U e k omega rho rhoE rhoU );
+            value           1e-12;
             mode            minimum;
             groupID         1;
         }

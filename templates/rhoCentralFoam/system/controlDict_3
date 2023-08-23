@@ -46,9 +46,9 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.3;
+maxCo           0.7;
 
-maxDeltaT       4e-11;
+maxDeltaT       1;
 
 functions
 {
