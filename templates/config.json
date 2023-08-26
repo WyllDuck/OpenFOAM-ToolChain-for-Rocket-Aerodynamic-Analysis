@@ -1,25 +1,25 @@
 {
-    "mesh_file": "/data/sphereCases/rocketMesh/rocketShort/noFinSupport/6M_20L/constant/polyMesh",
-    "map_file": "/data/sphereCases/run/rhoCentralFoamMa4.63AoA_R6",
+    "mesh_file": "/data/sphereCases/rocketMesh/rocketShort/noFinSupport/4.5M_13L/constant/polyMesh",
+    "map_file": "/data/sphereCases/run/rhoCentralFoamMa4.63_AoA0_R32",
     "flowVelocity": [
-        359.0844262407505,
+        1366.1839528899507,
         0,
         0
     ],
-    "nprocessors": 16,
-    "pressure": 25538.748,
-    "temperature": 222.80911999999998,
+    "nprocessors": [4, 1, 1],
+    "pressure": 6368.735599999999,
+    "temperature": 216.64999999999998,
     "Aref": 0.001282603306,
     "lRef": 1.04013,
     "CofR": [
-        0,
+        0.7286625,
         0,
         0
     ],
     "liftDir": [
         0,
-        1,
-        0
+        0,
+        1
     ],
     "dragDir": [
         1,
@@ -28,7 +28,7 @@
     ],
     "pitchAxis": [
         0,
-        0,
-        1
+        1,
+        0
     ]
 }

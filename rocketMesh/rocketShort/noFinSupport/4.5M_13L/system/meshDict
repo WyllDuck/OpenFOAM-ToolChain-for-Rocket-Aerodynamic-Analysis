@@ -36,40 +36,22 @@ maxCellSize 0.5;
 // Refine the patches within the mesh
 localRefinement
 {
-    aft_detail_rest
+    aft_detail
     {
         additionalRefinementLevels 11;
-        refinementThickness 0.001;
-    }
-
-    aft_detail_top
-    {
-        additionalRefinementLevels 13;
-        refinementThickness 0.0002;
+        refinementThickness 0.002;
     }
 
     body_rocket
     {
-        additionalRefinementLevels 9;
-        refinementThickness 0.0003;
+        additionalRefinementLevels 8;
+        refinementThickness 0.003;
     }
 }
 
 objectRefinements
 {
-    
-    refinementSkin
-    {
-        type        box;
-        additionalRefinementLevels 8;  
-        
-        centre      (#calc "$LENGTH / 2 + $ROUND_TIP_X" 0.0 0.0);
-        
-        lengthX     #calc "$LENGTH * 1.2";
-        lengthY     #calc "$DIAMETER * 1.35";
-        lengthZ     #calc "$DIAMETER * 1.35";
-        
-    }
+
 
     refinement0
     {
@@ -128,34 +110,68 @@ objectRefinements
         type        box;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.15" 0.0 0.0);
+        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.3";
-        lengthY     #calc "$DIAMETER * 0.6";
-        lengthZ     #calc "$DIAMETER * 0.6";
+        lengthX     #calc "$NOSE_LENGTH * 0.4";
+        lengthY     #calc "$DIAMETER * 0.7";
+        lengthZ     #calc "$DIAMETER * 0.7";
+        
+    }
+
+    nose_lenght3
+    {
+        type        box;
+        additionalRefinementLevels 10;  
+        
+        centre      (#calc "$NOSE_LENGTH * 0.05" 0.0 0.0);
+        
+        lengthX     #calc "$NOSE_LENGTH * 0.2";
+        lengthY     #calc "$DIAMETER * 0.4";
+        lengthZ     #calc "$DIAMETER * 0.4";
         
     }
     
     nose_tip1
     {
         type        sphere;
-        additionalRefinementLevels 10;
+        additionalRefinementLevels 11;
+
+        centre      (#calc "$ROUND_TIP_X * 1.4" 0.0 0.0);
+
+        radius      #calc "$ROUND_TIP_R * 6";
+    }
+
+    nose_tip2
+    {
+        type        sphere;
+        additionalRefinementLevels 12;
 
         centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
 
         radius      #calc "$ROUND_TIP_R * 3";
     }
 
+    nose_tip3
+    {
+        type        sphere;
+        additionalRefinementLevels 13;
+
+        centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
+
+        radius      #calc "$ROUND_TIP_R * 1.6";
+    }
+
+
     aft_lenght1
     {
         type        cone;
-        additionalRefinementLevels 9;
+        additionalRefinementLevels 10;
         
-        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.015" 0.0 0.0);
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.015" 0.0 0.0);
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.020" 0.0 0.0);
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.020" 0.0 0.0);
         
-        radius0 #calc "$DIAMETER / 2";
-        radius1 #calc "$DIAMETER / 2"; 
+        radius0 #calc "$DIAMETER / 2 * 0.5";
+        radius1 #calc "$DIAMETER / 2 * 1"; 
     }
 
     wake_refinement
@@ -185,32 +201,62 @@ objectRefinements
         lengthZ     #calc "$DIAMETER * 7";
        
     }
+
+    wake_refinement3
+    {
+
+        type        box;
+        additionalRefinementLevels 9;
+        
+        centre      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.033" 0.0 0.0);;
+        
+        lengthX     0.1;
+        lengthY     #calc "$DIAMETER * 1.75";
+        lengthZ     #calc "$DIAMETER * 1.75";
+       
+    }
+
+    wake_refinement4
+    {
+
+        type        box;
+        additionalRefinementLevels 5;
+        
+        centre      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.7" 0.0 0.0);;
+        
+        lengthX     1.4;
+        lengthY     #calc "$DIAMETER * 4";
+        lengthZ     #calc "$DIAMETER * 4";
+       
+    }
 }
 
-// anisotropicSources
-// {
-//     box
-//     {
-//         type        box;
-        
-//         centre      (#calc "($LENGTH - $AFT_LENGTH - $NOSE_LENGTH) / 2 + ($NOSE_LENGTH + $ROUND_TIP_X) * 0.7" 0.0 0.0);
-        
-//         lengthX     #calc "($LENGTH - $AFT_LENGTH - $NOSE_LENGTH) * 1.1";
-//         lengthY     #calc "$DIAMETER * 30";
-//         lengthZ     #calc "$DIAMETER * 30";
+// Join separate patches in just one propellerTip
+renameBoundary
+{
+	
+	newPatchNames
+	{
+		body_rocket     {newName wall; type wall;}
+        aft_detail      {newName wall; type wall;}
+		
+        xMin            {newName inlet; type patch;}
+		xMax            {newName outlet; type patch;}
 
-//         scaleX      2.5;
-//         scaleY      1.0;
-//         scaleZ      1.0;
-//     }
+        yMin            {newName symmetry; type patch;}
+		yMax            {newName far_field; type patch;}
+        
+        zMin            {newName far_field; type patch;}
+		zMax            {newName far_field; type patch;}
+	}
 
-// }
+}
 
 // Add inflation layers to the patches
 boundaryLayers 
 {
     
-    thicknessRatio 1.25;
+    thicknessRatio 1.4;
     nLayers 0;
 
     // allowDiscontinuity 0;
@@ -219,15 +265,12 @@ boundaryLayers
     {
         body_rocket
         {
-                nLayers 25;
+            nLayers 13;
         }
-        aft_detail_rest
+
+        aft_detail
         {
-                nLayers 25;
-        }
-        aft_detail_top
-        {
-                nLayers 25;
+            nLayers 13;
         }
     }
     
@@ -242,79 +285,6 @@ boundaryLayers
         reCalculateNormals 1;
         relThicknessTol 0.03;
         
-    }         
+    } 
+            
 }
-
-
-// Join separate patches in just one propellerTip
-renameBoundary
-{
-	
-	newPatchNames
-	{
-		body_rocket         {newName wall; type wall;}
-        aft_detail_rest     {newName wall; type wall;}
-        aft_detail_top      {newName wall; type wall;}
-		
-        xMin            {newName inlet; type patch;}
-		xMax            {newName outlet; type patch;}
-
-        yMin            {newName symmetry; type patch;}
-		yMax            {newName far_field; type patch;}
-        
-        zMin            {newName far_field; type patch;}
-		zMax            {newName far_field; type patch;}
-	}
-
-}
-
-// meshQualitySettings
-// {
-//     //- Maximum non-orthogonality allowed. Set to 180 to disable.
-//     maxNonOrtho 65;
-
-//     //- Max skewness allowed. Set to <0 to disable.
-//     maxBoundarySkewness 4;
-//     maxInternalSkewness 4;
-
-//     //- Max concaveness allowed. Is angle (in degrees) below which concavity
-//     //  is allowed. 0 is straight face, <0 would be convex face.
-//     //  Set to 180 to disable.
-//     maxConcave 80;
-
-//     //- Minimum pyramid volume. Is absolute volume of cell pyramid.
-//     //  Set to a sensible fraction of the smallest cell volume expected.
-//     //  Set to very negative number (e.g. -1E30) to disable.
-//     minVol 1e-13;
-
-//     //- Minimum quality of the tet formed by the face-centre
-//     //  and variable base point minimum decomposition triangles and
-//     //  the cell centre. This has to be a positive number for tracking
-//     //  to work. Set to very negative number (e.g. -1E30) to
-//     //  disable.
-//     //     <0 = inside out tet,
-//     //      0 = flat tet
-//     //      1 = regular tet
-//     minTetQuality -1e30; // 1e-30;
-
-//     //- Minimum face area. Set to <0 to disable.
-//     minArea -1;
-
-//     //- Minimum face twist. Set to <-1 to disable. dot product of face normal
-//     //  and face centre triangles normal
-//     minTwist 0.01;
-
-//     //- Minimum normalised cell determinant
-//     //  1 = hex, <= 0 = folded or flattened illegal cell
-//     minDeterminant 0.001;
-
-//     //- minFaceWeight (0 -> 0.5)
-//     minFaceWeight 0.05;
-
-//     //- minVolRatio (0 -> 1)
-//     minVolRatio 0.01;
-
-//     //must be >0 for Fluent compatibility
-//     minTriangleTwist -1;
-
-// }

@@ -39,7 +39,7 @@ localRefinement
     aft_detail
     {
         additionalRefinementLevels 11;
-        refinementThickness 0.001;
+        refinementThickness 0.002;
     }
 
     body_rocket
@@ -52,18 +52,6 @@ localRefinement
 objectRefinements
 {
 
-    // refinementBase
-    // {
-    //     type        box;
-    //     additionalRefinementLevels 1;  
-        
-    //     centre      (0.0 0.0 0.0);
-        
-    //     lengthX     100;
-    //     lengthY     100;
-    //     lengthZ     100;
-        
-    // }
 
     refinement0
     {
@@ -122,11 +110,11 @@ objectRefinements
         type        box;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.15" 0.0 0.0);
+        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.3";
-        lengthY     #calc "$DIAMETER * 0.6";
-        lengthZ     #calc "$DIAMETER * 0.6";
+        lengthX     #calc "$NOSE_LENGTH * 0.4";
+        lengthY     #calc "$DIAMETER * 0.7";
+        lengthZ     #calc "$DIAMETER * 0.7";
         
     }
     
@@ -134,6 +122,16 @@ objectRefinements
     {
         type        sphere;
         additionalRefinementLevels 10;
+
+        centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
+
+        radius      #calc "$ROUND_TIP_R * 5";
+    }
+
+        nose_tip2
+    {
+        type        sphere;
+        additionalRefinementLevels 11;
 
         centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
 

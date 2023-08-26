@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         40000;
+endTime         4000;
 
 deltaT          1;
 
@@ -30,7 +30,7 @@ writeControl    adjustableRunTime;
 
 writeInterval   50;
 
-purgeWrite      0;
+purgeWrite      5;
 
 writeFormat     binary;
 
@@ -62,7 +62,8 @@ functions
     #include "FOs/FOwallShearStress"
 
     #include "FOs/FOsurfaces"
-    #include "FOs/FOrunTimeControl"
+
+    #include "fileUpdater"
 }
 
 // ************************************************************************* //

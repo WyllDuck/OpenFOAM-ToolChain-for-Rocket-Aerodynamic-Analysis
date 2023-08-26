@@ -52,6 +52,7 @@ localRefinement
 objectRefinements
 {
 
+
     refinement0
     {
         type        box;
@@ -109,7 +110,7 @@ objectRefinements
         type        box;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.15" 0.0 0.0);
+        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
         
         lengthX     #calc "$NOSE_LENGTH * 0.3";
         lengthY     #calc "$DIAMETER * 0.6";
@@ -193,7 +194,7 @@ renameBoundary
 boundaryLayers 
 {
     
-    thicknessRatio 1.2;
+    thicknessRatio 1.4;
     nLayers 0;
 
     // allowDiscontinuity 0;
@@ -202,12 +203,12 @@ boundaryLayers
     {
         body_rocket
         {
-            nLayers 7;
+            nLayers 10;
         }
 
         aft_detail
         {
-            nLayers 7;
+            nLayers 10;
         }
     }
     

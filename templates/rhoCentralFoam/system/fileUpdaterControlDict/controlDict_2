@@ -10,32 +10,61 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
-{
-}
+application     rhoCentralFoam;
 
-gradSchemes
-{
-}
+startFrom       latestTime;
 
-divSchemes
-{
-}
+startTime       0;
 
-laplacianSchemes
-{
-}
+stopAt          endTime;
 
-interpolationSchemes
-{
-}
+endTime         4000;
 
-snGradSchemes
+deltaT          1;
+
+writeControl    adjustableRunTime;
+
+writeInterval   50;
+
+purgeWrite      5;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   10;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           0.02;
+
+maxDeltaT       1;
+
+functions
 {
+
+    #include "FOs/FOsolverInfo"
+    #include "FOs/FOforceCoeffs"
+
+    #include "FOs/FOyPlus"
+    #include "FOs/FOCourantNo"
+    #include "FOs/FOMach"
+    #include "FOs/FOwallShearStress"
+
+    #include "FOs/FOsurfaces"
+
+    #include "fileUpdater"
+
 }
 
 // ************************************************************************* //

@@ -47,10 +47,9 @@ interpolationSchemes
 {
     default         linear;
 
-    // upwind is more dissipative than vanLeer, thus higher numerical stability for initial convergence
-    reconstruct(rho)    upwind;
-    reconstruct(U)      upwind;
-    reconstruct(T)      upwind;
+    reconstruct(rho)    vanLeer;
+    reconstruct(U)      vanLeerV;
+    reconstruct(T)      vanLeer;
 }
 
 snGradSchemes

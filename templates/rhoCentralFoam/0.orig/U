@@ -24,7 +24,7 @@ boundaryField
 {
     wallPatch
     {
-        type            slip;
+        type            noSlip;
     }
 
     inletPatch

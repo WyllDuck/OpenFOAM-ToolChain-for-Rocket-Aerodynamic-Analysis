@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     cartesianMesh;
+application     rhoCentralFoam;
 
 startFrom       latestTime;
 
@@ -22,26 +22,49 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1;
+endTime         4000;
 
 deltaT          1;
 
-writeControl    timeStep;
+writeControl    adjustableRunTime;
 
-writeInterval   1;
+writeInterval   50;
 
-purgeWrite      0;
+purgeWrite      5;
 
 writeFormat     binary;
 
-writePrecision  15;
+writePrecision  6;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   10;
 
 runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           0.08;
+
+maxDeltaT       1;
+
+functions
+{
+
+    #include "FOs/FOsolverInfo"
+    #include "FOs/FOforceCoeffs"
+
+    #include "FOs/FOyPlus"
+    #include "FOs/FOCourantNo"
+    #include "FOs/FOMach"
+    #include "FOs/FOwallShearStress"
+
+    #include "FOs/FOsurfaces"
+
+    #include "fileUpdater"
+
+}
 
 // ************************************************************************* //

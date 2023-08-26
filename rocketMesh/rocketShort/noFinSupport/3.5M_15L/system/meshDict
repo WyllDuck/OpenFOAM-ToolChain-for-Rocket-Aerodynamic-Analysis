@@ -28,7 +28,7 @@ AFT_LENGTH 0.09271;
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 surfaceFile "geometry.fms";
-maxCellSize 0.4;
+maxCellSize 0.5;
 // boundaryCellSize 0.5;
 // boundaryCellSizeRefinementThickness 0.5;
 // minCellSize 0.0001;
@@ -39,7 +39,7 @@ localRefinement
     aft_detail
     {
         additionalRefinementLevels 11;
-        refinementThickness 0.001;
+        refinementThickness 0.002;
     }
 
     body_rocket
@@ -52,18 +52,6 @@ localRefinement
 objectRefinements
 {
 
-    // refinementBase
-    // {
-    //     type        box;
-    //     additionalRefinementLevels 1;  
-        
-    //     centre      (0.0 0.0 0.0);
-        
-    //     lengthX     100;
-    //     lengthY     100;
-    //     lengthZ     100;
-        
-    // }
 
     refinement0
     {
@@ -122,18 +110,41 @@ objectRefinements
         type        box;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.15" 0.0 0.0);
+        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.3";
-        lengthY     #calc "$DIAMETER * 0.6";
-        lengthZ     #calc "$DIAMETER * 0.6";
+        lengthX     #calc "$NOSE_LENGTH * 0.4";
+        lengthY     #calc "$DIAMETER * 0.7";
+        lengthZ     #calc "$DIAMETER * 0.7";
+        
+    }
+
+    nose_lenght3
+    {
+        type        box;
+        additionalRefinementLevels 10;  
+        
+        centre      (#calc "$NOSE_LENGTH * 0.05" 0.0 0.0);
+        
+        lengthX     #calc "$NOSE_LENGTH * 0.2";
+        lengthY     #calc "$DIAMETER * 0.4";
+        lengthZ     #calc "$DIAMETER * 0.4";
         
     }
     
     nose_tip1
     {
         type        sphere;
-        additionalRefinementLevels 10;
+        additionalRefinementLevels 11;
+
+        centre      (#calc "$ROUND_TIP_X * 1.4" 0.0 0.0);
+
+        radius      #calc "$ROUND_TIP_R * 6";
+    }
+
+    nose_tip2
+    {
+        type        sphere;
+        additionalRefinementLevels 12;
 
         centre      (#calc "$ROUND_TIP_X" 0.0 0.0);
 
@@ -143,13 +154,13 @@ objectRefinements
     aft_lenght1
     {
         type        cone;
-        additionalRefinementLevels 9;
+        additionalRefinementLevels 10;
         
-        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.015" 0.0 0.0);
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.015" 0.0 0.0);
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.020" 0.0 0.0);
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.020" 0.0 0.0);
         
-        radius0 #calc "$DIAMETER / 2";
-        radius1 #calc "$DIAMETER / 2"; 
+        radius0 #calc "$DIAMETER / 2 * 0.5";
+        radius1 #calc "$DIAMETER / 2 * 1"; 
     }
 
     wake_refinement
@@ -177,6 +188,20 @@ objectRefinements
         lengthX     1.8;
         lengthY     #calc "$DIAMETER * 7";
         lengthZ     #calc "$DIAMETER * 7";
+       
+    }
+
+    wake_refinement3
+    {
+
+        type        box;
+        additionalRefinementLevels 8;
+        
+        centre      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.033" 0.0 0.0);;
+        
+        lengthX     0.1;
+        lengthY     #calc "$DIAMETER * 1.75";
+        lengthZ     #calc "$DIAMETER * 1.75";
        
     }
 }
