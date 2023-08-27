@@ -22,8 +22,25 @@ fileUpdate1
         (50 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")  
         (65 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_5")  
         (80 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")  
-        (100 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")  
-        (160 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_8")  
+        (100 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        
+        {% if vanLeer != -1 %} 
+        // Repeat cycle for 'vanLeer'
+        // NOTE: Wait for stability with 'upwind' to change to 'vanLeer'
+        ({{ vanLeer + 0}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
+        ({{ vanLeer + 20}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_2")  
+        ({{ vanLeer + 35}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_3")  
+        
+        // NOTE: 'vanLeer' needs very low Co number
+        ({{ vanLeer + 150}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")  
+        ({{ vanLeer + 300}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_5")
+        //({{ vanLeer + 400}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")
+        //({{ vanLeer + 800}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        {% endif %}
+
+        // Add runTimeControl End Conditions
+        ({{ minIter }} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_final")
+
     );
 }
 
@@ -36,9 +53,11 @@ fileUpdate2
     fileToUpdate      "$FOAM_CASE/system/fvSchemes";
     timeVsFile
     (
-        (-1  "$FOAM_CASE/system/fvSchemes")
+        (-1  "$FOAM_CASE/system/fvSchemesUpWind")
+        {% if vanLeer != -1 %}
         // NOTE: vanLeer is more unstable thus it is better to save the iteration 150 
         //       (every 50 iterations there is a save) before making the change to this more unstable scheme.
-        (151 "$FOAM_CASE/system/fvSchemesVanLeer")
+        ({{ vanLeer + 0}} "$FOAM_CASE/system/fvSchemesVanLeer")
+        {% endif %}
     );
 }

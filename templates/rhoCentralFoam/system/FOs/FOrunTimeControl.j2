@@ -16,20 +16,11 @@ runTimeControl1
         {
             type            average;
             functionObject  forceCoeffs1;
-            fields          (Cd Cl);
+            fields          (Cd Cl CmPitch);
             tolerance       1e-3;
-            window          100;
+            window          50;
             base            iter;
             windowType      approximate;
-            groupID         1;
-        }
-        condition1
-        {
-            type            equationInitialResidual;
-            fields          ( U e k omega rho rhoE rhoU );
-            value           1e-9;
-            mode            minimum;
-            groupID         1;
         }
     }
 }

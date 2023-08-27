@@ -7,10 +7,9 @@ set key top left autotitle columnhead
 set datafile commentschar '#'
 
 plot 	"tables/forceCoeffs_plot.dat" using "Time":"Cd" title 'Cd' with lines,\
+ 		"tables/forceCoeffs_plot.dat" using "Time":"CmPitch" title 'CmPitch' with lines,\
 		"tables/forceCoeffs_plot.dat" using "Time":"Cl" title 'Cl' with lines
 pause 1
 reread
 
-pause 1
-reread
 ### end of code

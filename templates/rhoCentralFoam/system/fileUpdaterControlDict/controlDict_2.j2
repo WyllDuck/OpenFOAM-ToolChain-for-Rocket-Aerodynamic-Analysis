@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         4000;
+endTime         {{ minIter + 1 }};
 
 deltaT          1;
 
@@ -46,7 +46,7 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+maxCo           0.02;
 
 maxDeltaT       1;
 
@@ -62,7 +62,6 @@ functions
     #include "FOs/FOwallShearStress"
 
     #include "FOs/FOsurfaces"
-    #include "FOs/FOrunTimeControl" // Added here only, last controlDict update
 
     #include "fileUpdater"
 

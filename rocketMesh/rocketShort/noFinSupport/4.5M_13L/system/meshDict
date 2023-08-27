@@ -45,7 +45,7 @@ localRefinement
     body_rocket
     {
         additionalRefinementLevels 8;
-        refinementThickness 0.003;
+        refinementThickness 0.005;
     }
 }
 
@@ -86,9 +86,9 @@ objectRefinements
         
         centre      (#calc "$LENGTH / 2" 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 1.2";
-        lengthY     #calc "$DIAMETER * 3";
-        lengthZ     #calc "$DIAMETER * 3";
+        lengthX     #calc "$LENGTH * 1.3";
+        lengthY     #calc "$DIAMETER * 4.5";
+        lengthZ     #calc "$DIAMETER * 4.5";
         
     }
 
@@ -107,15 +107,15 @@ objectRefinements
 
     nose_lenght2
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
+        p0      (#calc "- $NOSE_LENGTH * 0.08" 0.0 0.0);
+        p1      (#calc "$NOSE_LENGTH * 0.7" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.4";
-        lengthY     #calc "$DIAMETER * 0.7";
-        lengthZ     #calc "$DIAMETER * 0.7";
-        
+        radius0 #calc "$DIAMETER / 2 * 0.7";
+        radius1 #calc "$DIAMETER / 2 * 1.7";
+
     }
 
     nose_lenght3
@@ -213,6 +213,20 @@ objectRefinements
         lengthX     0.1;
         lengthY     #calc "$DIAMETER * 1.75";
         lengthZ     #calc "$DIAMETER * 1.75";
+       
+    }
+
+    wake_refinement5
+    {
+
+        type        box;
+        additionalRefinementLevels 8;
+        
+        centre      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.10" 0.0 0.0);;
+        
+        lengthX     0.2;
+        lengthY     #calc "$DIAMETER * 1.35";
+        lengthZ     #calc "$DIAMETER * 1.35";
        
     }
 
