@@ -84,9 +84,9 @@ objectRefinements
         type        box;
         additionalRefinementLevels 7;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        centre      (#calc "$LENGTH / 2 - 0.075" 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 1.3";
+        lengthX     #calc "$LENGTH * 1.15";
         lengthY     #calc "$DIAMETER * 4.5";
         lengthZ     #calc "$DIAMETER * 4.5";
         

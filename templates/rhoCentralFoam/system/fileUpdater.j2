@@ -27,15 +27,35 @@ fileUpdate1
         {% if vanLeer != -1 %} 
         // Repeat cycle for 'vanLeer'
         // NOTE: Wait for stability with 'upwind' to change to 'vanLeer'
-        ({{ vanLeer + 0}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
-        ({{ vanLeer + 20}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_2")  
-        ({{ vanLeer + 35}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_3")  
         
-        // NOTE: 'vanLeer' needs very low Co number
-        ({{ vanLeer + 150}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")  
+        {% if (vanLeer + 0) < minIter and final_Co >= 0.01 %} 
+        ({{ vanLeer + 0}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
+        {% endif %}
+        
+        {% if (vanLeer + 20) < minIter and final_Co >= 0.02 %} 
+        ({{ vanLeer + 20}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_2")
+        {% endif %}
+        
+        {% if (vanLeer + 35) < minIter and final_Co >= 0.04 %} 
+        ({{ vanLeer + 35}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_3")
+        {% endif %}
+        
+        {% if (vanLeer + 150) < minIter and final_Co >= 0.08 %} 
+        ({{ vanLeer + 150}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")
+        {% endif %}
+        
+        {% if (vanLeer + 300) < minIter and final_Co >= 0.16 %} 
         ({{ vanLeer + 300}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_5")
-        //({{ vanLeer + 400}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")
-        //({{ vanLeer + 800}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        {% endif %}
+        
+        {% if (vanLeer + 800) < minIter and final_Co >= 0.32 %} 
+        ({{ vanLeer + 800}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")
+        {% endif %}
+        
+        {% if (vanLeer + 2000) < minIter and final_Co >= 0.50 %} 
+        ({{ vanLeer + 2000}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        {% endif %}
+        
         {% endif %}
 
         // Add runTimeControl End Conditions
