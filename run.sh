@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 GLOBAL_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $GLOBAL_DIR
 mkdir -p run
@@ -7,7 +7,7 @@ mkdir -p run
 function execute_openfoam_sim
 {
     now=$(date --iso-8601=seconds)
-    logFile="log.$1"
+    logFile="$GLOBAL_DIR/log.$1"
     pathDir="$GLOBAL_DIR/run/$1"
     
     echo '================================================'
@@ -23,7 +23,7 @@ function execute_openfoam_sim
     chmod +x All* # ensure that script are executable
     ./Allclean # clean previous work
     ./Allrun
-    cd .. # back to general directory to possibily execute more simulations
+    cd $GLOBAL_DIR # back to general directory to possibily execute more simulations
     
     echo "Simulation Ended."  2>&1 | tee $logFile
 }
