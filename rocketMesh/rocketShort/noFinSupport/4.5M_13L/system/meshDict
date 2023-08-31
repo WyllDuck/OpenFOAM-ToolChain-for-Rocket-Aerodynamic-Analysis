@@ -52,13 +52,38 @@ localRefinement
 objectRefinements
 {
 
+    refinementDomain
+    {
+        type        box;
+        additionalRefinementLevels 1;  
+        
+        centre      (0.0 0.0 0.0);
+        
+        lengthX     100;
+        lengthY     100;
+        lengthZ     100;
+        
+    }
+
+    refinementDomainCenter
+    {
+        type        box;
+        additionalRefinementLevels 2;  
+        
+        centre      (50.0 0.0 0.0);
+        
+        lengthX     100;
+        lengthY     #calc "$DIAMETER * 17";
+        lengthZ     #calc "$DIAMETER * 17";
+        
+    }
 
     refinement0
     {
         type        box;
         additionalRefinementLevels 3;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        centre      (#calc "$LENGTH / 2 + 0.2" 0.0 0.0);
         
         lengthX     #calc "$LENGTH * 3";
         lengthY     #calc "$DIAMETER * 30";
@@ -71,7 +96,7 @@ objectRefinements
         type        box;
         additionalRefinementLevels 5;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        centre      (#calc "$LENGTH / 2 + 0.1" 0.0 0.0);
         
         lengthX     #calc "$LENGTH * 2";
         lengthY     #calc "$DIAMETER * 12";
@@ -167,24 +192,24 @@ objectRefinements
         type        cone;
         additionalRefinementLevels 10;
         
-        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.020" 0.0 0.0);
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.030" 0.0 0.0);
         p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.020" 0.0 0.0);
         
         radius0 #calc "$DIAMETER / 2 * 0.5";
-        radius1 #calc "$DIAMETER / 2 * 1"; 
+        radius1 #calc "$DIAMETER / 2 * 1.5"; 
     }
 
     wake_refinement
     {
 
         type        cone;
-        additionalRefinementLevels 6;
+        additionalRefinementLevels 7;
         
-        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.4" 0.0 0.0);
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.1" 0.0 0.0);
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.5" 0.0 0.0);
         
         radius0 #calc "$DIAMETER / 2 * 3";
-        radius1 #calc "$DIAMETER / 2 * 5"; 
+        radius1 #calc "$DIAMETER / 2 * 6"; 
        
     }
 
@@ -241,6 +266,21 @@ objectRefinements
         lengthX     1.4;
         lengthY     #calc "$DIAMETER * 4";
         lengthZ     #calc "$DIAMETER * 4";
+       
+    }
+
+    
+    wake_refinement_lip
+    {
+
+        type        cone;
+        additionalRefinementLevels 12;
+        
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.03" 0.0 0.0);;
+        
+        radius0     #calc "1.47*0.0254 / 2";
+        radius1     #calc "1.47*0.0254 / 2";
        
     }
 }
