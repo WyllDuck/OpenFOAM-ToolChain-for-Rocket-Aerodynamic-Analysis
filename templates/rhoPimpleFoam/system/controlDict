@@ -30,9 +30,9 @@ writeControl    adjustable;
 
 writeInterval   50;
 
-purgeWrite      0;
+purgeWrite      5;
 
-writeFormat     ascii;
+writeFormat     binary;
 
 writePrecision  8;
 
@@ -56,7 +56,7 @@ functions
     #include "FOs/FOwallShearStress"
 
     #include "FOs/FOrunTimeControl"
-
+    #include "FOs/FOsurfaces"
 }
 
 // ************************************************************************* //
