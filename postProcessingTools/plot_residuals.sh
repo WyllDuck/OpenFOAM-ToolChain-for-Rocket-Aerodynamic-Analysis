@@ -30,7 +30,7 @@ gnuplot plot_residuals &
     while :
     do
         tail -n +2 $1 | sed -e '/Time/ s/#//g' > tables/solverInfo_plot.dat
-        sleep 10
+        sleep 30
     done
 )
 

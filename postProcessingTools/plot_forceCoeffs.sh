@@ -12,7 +12,7 @@ gnuplot plot_forceCoeffs &
     while :
     do
         tail -n +13 $1 | sed -e '/Time/ s/#//g' > tables/forceCoeffs_plot.dat
-        sleep 10
+        sleep 30
     done
 )
 
