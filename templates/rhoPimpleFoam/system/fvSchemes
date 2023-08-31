@@ -22,25 +22,20 @@ ddtSchemes
 gradSchemes
 {
     default         Gauss linear;
-
-    limited         cellLimited Gauss linear 1;
-    grad(U)         $limited;
-    grad(k)         $limited;
-    grad(omega)     $limited;
 }
 
 divSchemes
 {
     default         none;
 
-    div(phi,U)      Gauss linearUpwind limited;
+    div(phi,U)      Gauss upwind;
+    div(U)          Gauss linear;
 
-    energy          Gauss linearUpwind limited;
-    div(phi,e)      $energy;
-    div(phi,K)      $energy;
-    div(phi,Ekp)    $energy;
+    div(phi,e)      Gauss upwind;
+    div(phi,K)      Gauss linear;
+    div(phi,Ekp)    Gauss upwind;
 
-    turbulence      Gauss linearUpwind limited;
+    turbulence      Gauss upwind;
     div(phi,k)      $turbulence;
     div(phi,omega)  $turbulence;
 

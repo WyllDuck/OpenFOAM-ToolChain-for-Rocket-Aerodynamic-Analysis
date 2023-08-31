@@ -10,6 +10,6 @@ set datafile commentschar '#'
 {% set columns = columns.split(' ') %}
 plot {% for elem in columns %} "tables/solverInfo_plot.dat" using "Time":"{{ elem }}" title '{{ elem|replace('_', ' ')|escape }}' with lines, {% endfor %}
 
-pause 1
+pause 10
 reread
 ### end of code

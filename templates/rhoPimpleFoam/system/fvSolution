@@ -20,14 +20,15 @@ solvers
     {
         solver          PCG;
         preconditioner  DIC;
-        tolerance       1e-06;
+        tolerance       1e-15;
         relTol          0.1;
+        minIter         1;
     }
 
     pFinal
     {
         $p;
-        tolerance       1e-06;
+        tolerance       1e-15;
         relTol          0.1;
     }
 
@@ -35,14 +36,15 @@ solvers
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-05;
+        tolerance       1e-14;
         relTol          0.1;
+        minIter         1;
     }
 
     "(rho|U|e|k|omega)Final"
     {
         $U;
-        tolerance       1e-05;
+        tolerance       1e-14;
         relTol          0.1;
     }
 }
@@ -51,13 +53,13 @@ PIMPLE
 {
     momentumPredictor        yes;
     nCorrectors              2;
-    nNonOrthogonalCorrectors 1;
+    nNonOrthogonalCorrectors 3;
     nOuterCorrectors         1;
     
-    pMinFactor      0.1;
-    pMaxFactor      2;
+    pMinFactor      0.02;
+    pMaxFactor      4;
 
-    maxCo                   0.2;
+    maxCo                   0.6;
     rDeltaTSmoothingCoeff   0.1;
     rDeltaTDampingCoeff     1;
     maxDeltaT               1;
