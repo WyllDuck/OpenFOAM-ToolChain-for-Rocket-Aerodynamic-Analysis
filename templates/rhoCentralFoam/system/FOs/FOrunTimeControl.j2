@@ -17,8 +17,8 @@ runTimeControl1
             type            average;
             functionObject  forceCoeffs1;
             fields          (Cd Cl CmPitch);
-            tolerance       1e-3;
-            window          50;
+            tolerance       {{ coeffs_variation }};
+            window          {{ coeffs_range }};
             base            iter;
             windowType      approximate;
         }

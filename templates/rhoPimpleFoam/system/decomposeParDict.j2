@@ -14,13 +14,13 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains 4;
+numberOfSubdomains {{ nprocessors[0] * nprocessors[1] * nprocessors[2] }};
 
-method          hierarchical;
+method          simple;
 
-coeffs
+simpleCoeffs
 {
-    n           (2 2 1);
+    n              {{ "({} {} {})".format(nprocessors[0], nprocessors[1], nprocessors[2]) }};
 }
 
 // ************************************************************************* //
