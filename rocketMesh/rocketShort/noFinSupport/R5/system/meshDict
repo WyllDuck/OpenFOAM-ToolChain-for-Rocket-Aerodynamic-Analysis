@@ -303,10 +303,10 @@ objectRefinements
         additionalRefinementLevels 12;
         
         p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.003" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.01" 0.0 0.0);;
         
         radius0     #calc "1.52*0.0254 / 2";
-        radius1     #calc "1.49*0.0254 / 2";
+        radius1     #calc "1.65*0.0254 / 2";
        
     }
 }
