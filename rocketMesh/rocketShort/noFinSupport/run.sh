@@ -1,23 +1,41 @@
-cd 850k_7L
+cd R0
 sed -i -e 's/\r$//' All*
+chmod +x All*
 ./Allclean
 ./Allrun
 cd ..
 
-cd 1.5M_15L
+cd R1
 sed -i -e 's/\r$//' All*
+chmod +x All*
 ./Allclean
 ./Allrun
 cd ..
 
-#cd 3.5M_15L
-#sed -i -e 's/\r$//' All*
-#./Allclean
-#./Allrun
-#cd ..
+cd R2
+sed -i -e 's/\r$//' All*
+chmod +x All*
+./Allclean
+./Allrun
+cd ..
 
-#cd 4.5M_13L
-#sed -i -e 's/\r$//' All*
-#./Allclean
-#./Allrun
-#cd ..
+cd R3
+sed -i -e 's/\r$//' All*
+chmod +x All*
+./Allclean
+./Allrun
+cd ..
+
+cd R4
+sed -i -e 's/\r$//' All*
+chmod +x All*
+./Allclean
+./Allrun
+cd ..
+
+cd R5
+sed -i -e 's/\r$//' All*
+chmod +x All*
+./Allclean
+./Allrun
+cd ..
