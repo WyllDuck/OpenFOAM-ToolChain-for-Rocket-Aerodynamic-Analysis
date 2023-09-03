@@ -296,17 +296,31 @@ objectRefinements
     }
 
     
-    wake_refinement_lip
+    wake_refinement_lip1
     {
 
         type        cone;
         additionalRefinementLevels 12;
         
         p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.007" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.0045" 0.0 0.0);;
         
         radius0     #calc "1.52*0.0254 / 2";
-        radius1     #calc "1.60*0.0254 / 2";
+        radius1     #calc "1.55*0.0254 / 2";
+       
+    }
+
+    wake_refinement_lip2
+    {
+
+        type        cone;
+        additionalRefinementLevels 11;
+        
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.012" 0.0 0.0);;
+        
+        radius0     #calc "1.52*0.0254 / 2";
+        radius1     #calc "1.68*0.0254 / 2";
        
     }
 }

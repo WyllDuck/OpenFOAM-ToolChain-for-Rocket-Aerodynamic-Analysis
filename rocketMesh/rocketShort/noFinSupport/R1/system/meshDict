@@ -28,7 +28,7 @@ AFT_LENGTH 0.04572;
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 surfaceFile "geometry.fms";
-maxCellSize 0.6;
+maxCellSize 1;
 // boundaryCellSize 0.5;
 // boundaryCellSizeRefinementThickness 0.5;
 // minCellSize 0.0001;
@@ -228,16 +228,16 @@ boundaryLayers
     {
         body_rocket
         {
-            nLayers 10;
+            nLayers 5;
         }
 
         aft_detail
         {
-            nLayers 10;
+            nLayers 5;
         }
     }
     
-    optimiseLayer 1;
+    optimiseLayer 0;
     // untangleLayers 0;
 
     optimisationParameters
