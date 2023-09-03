@@ -22,8 +22,8 @@ ROUND_TIP_X 0.00804;
 ROUND_TIP_R 0.00157;
 
 NOSE_LENGTH 0.26924;
-POS_AFT_CENTER_X 0.993775;
-AFT_LENGTH 0.09271;
+POS_AFT_CENTER_X 1.01727;
+AFT_LENGTH 0.04572;
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -80,67 +80,67 @@ objectRefinements
 
     refinement0
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 3;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        p0      (#calc "$LENGTH / 2 + (- $LENGTH * 1.5)" 0.0 0.0);
+        p1      (#calc "$LENGTH / 2 + ($LENGTH * 1.5)" 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 3";
-        lengthY     #calc "$DIAMETER * 30";
-        lengthZ     #calc "$DIAMETER * 30";
+        radius0     #calc "$DIAMETER / 2 * 30";
+        radius1     #calc "$DIAMETER / 2 * 30";
         
     }
 
     refinement1
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 5;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        p0      (#calc "$LENGTH / 2 + (- $LENGTH * 1)" 0.0 0.0);
+        p1      (#calc "$LENGTH / 2 + ($LENGTH * 1)" 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 2";
-        lengthY     #calc "$DIAMETER * 12";
-        lengthZ     #calc "$DIAMETER * 12";
+        radius0     #calc "$DIAMETER / 2 * 12";
+        radius1     #calc "$DIAMETER / 2 * 12";
         
     }
 
     refinement2
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 7;  
         
-        centre      (#calc "$LENGTH / 2" 0.0 0.0);
+        p0      (#calc "$LENGTH / 2 + (- $LENGTH * 0.6)" 0.0 0.0);
+        p1      (#calc "$LENGTH / 2 + ($LENGTH * 0.6)" 0.0 0.0);
         
-        lengthX     #calc "$LENGTH * 1.2";
-        lengthY     #calc "$DIAMETER * 3";
-        lengthZ     #calc "$DIAMETER * 3";
+        radius0     #calc "$DIAMETER / 2 * 3.0";
+        radius1     #calc "$DIAMETER / 2 * 3.0";
         
     }
 
     nose_length1
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 8;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.2" 0.0 0.0);
+        p0      (#calc "$NOSE_LENGTH * 0.2 + ($NOSE_LENGTH * 0.35)" 0.0 0.0);
+        p1      (#calc "$NOSE_LENGTH * 0.2 + ($NOSE_LENGTH * -0.35)" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.7";
-        lengthY     #calc "$DIAMETER";
-        lengthZ     #calc "$DIAMETER";
+        radius0     #calc "$DIAMETER / 2";
+        radius1     #calc "$DIAMETER / 2";
         
     }
 
     nose_length2
     {
-        type        box;
+        type        cone;
         additionalRefinementLevels 9;  
         
-        centre      (#calc "$NOSE_LENGTH * 0.12" 0.0 0.0);
+        p0      (#calc "$NOSE_LENGTH * 0.12 + (- $NOSE_LENGTH * 0.15)" 0.0 0.0);
+        p1      (#calc "$NOSE_LENGTH * 0.12 + ($NOSE_LENGTH * 0.15)" 0.0 0.0);
         
-        lengthX     #calc "$NOSE_LENGTH * 0.3";
-        lengthY     #calc "$DIAMETER * 0.6";
-        lengthZ     #calc "$DIAMETER * 0.6";
-        
+        radius0     #calc "$DIAMETER / 2 * 0.6";
+        radius1     #calc "$DIAMETER / 2 * 0.6";
+
     }
     
     nose_tip1
@@ -182,14 +182,14 @@ objectRefinements
     wake_refinement2
     {
 
-        type        box;
+        type        cone;
         additionalRefinementLevels 4;
         
-        centre      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 0.9" 0.0 0.0);;
+        p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 + 1.8" 0.0 0.0);;
         
-        lengthX     1.8;
-        lengthY     #calc "$DIAMETER * 7";
-        lengthZ     #calc "$DIAMETER * 7";
+        radius0     #calc "$DIAMETER / 2 * 7";
+        radius1     #calc "$DIAMETER / 2 * 7";
        
     }
 }
