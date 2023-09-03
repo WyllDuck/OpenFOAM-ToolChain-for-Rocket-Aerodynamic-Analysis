@@ -29,23 +29,18 @@ boundaryField
 
     inletPatch
     {
-        type            inletOutlet;
-        inletValue      $internalField;
+        type            fixedValue;
         value           $internalField;
     }
 
     outletPatch
     {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
+        type            advective;
     }
 
     farFieldPatch
     {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
+        type            advective;
     }
 
     symmetryPatch

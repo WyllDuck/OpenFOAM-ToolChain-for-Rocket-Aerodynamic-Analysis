@@ -29,20 +29,20 @@ boundaryField
 
     inletPatch
     {
-        type            freestreamPressure;
-        freestreamValue $internalField;
+        type            fixedValue;
+        value           $internalField;
     }
 
     outletPatch
-    {
-        type            freestreamPressure;
-        freestreamValue $internalField;
+    {        
+        type            waveTransmissive;
+        gamma           1.4;
     }
 
     farFieldPatch
     {
-        type            freestreamPressure;
-        freestreamValue $internalField;
+        type            waveTransmissive;
+        gamma           1.4;
     }
 
     symmetryPatch

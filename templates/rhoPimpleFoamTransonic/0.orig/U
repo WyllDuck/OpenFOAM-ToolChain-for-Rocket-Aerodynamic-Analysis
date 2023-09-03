@@ -29,25 +29,29 @@ boundaryField
 
     inletPatch
     {
-        type            freestreamVelocity;
-        freestreamValue $internalField;
+        type            fixedValue;
+        value           $internalField;
     }
 
     outletPatch
     {
-        type            freestreamVelocity;
-        freestreamValue $internalField;
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
     }
 
     farFieldPatch
     {
-        type            freestreamVelocity;
-        freestreamValue $internalField;
+        type            supersonicFreestream;
+        pInf            $pressure;
+        TInf            $temperature;
+        UInf            $flowVelocity;
+        gamma           1.4;
     }
 
     symmetryPatch
     {
-        type            symmetry; // symmetryPlane might cause problems if the surface is not perfectly flat 
+        type            symmetry;
     }
 }
 
