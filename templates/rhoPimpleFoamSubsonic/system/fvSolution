@@ -53,11 +53,9 @@ PIMPLE
 {
     momentumPredictor        yes;
     nCorrectors              2;
-    nNonOrthogonalCorrectors 1;
+    nNonOrthogonalCorrectors 3;
     nOuterCorrectors         1;
     
-    transonic       yes;    // Transonic flow ON
-
     pMinFactor      0.02;
     pMaxFactor      4;
 
@@ -66,5 +64,6 @@ PIMPLE
     rDeltaTDampingCoeff     1;
     maxDeltaT               1;
 }
+
 
 // ************************************************************************* //
