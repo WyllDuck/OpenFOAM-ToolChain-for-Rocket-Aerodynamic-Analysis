@@ -18,10 +18,10 @@ solvers
 {
     p
     {
-        solver          PCG;
-        preconditioner  DIC;
+        solver          PBiCGStab;
+        preconditioner  DILU;
         tolerance       1e-15;
-        relTol          0.1;
+        relTol          0.01;
         minIter         1;
     }
 
