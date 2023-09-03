@@ -52,6 +52,31 @@ localRefinement
 objectRefinements
 {
 
+    refinementDomain
+    {
+        type        box;
+        additionalRefinementLevels 1;  
+        
+        centre      (0.0 0.0 0.0);
+        
+        lengthX     100;
+        lengthY     100;
+        lengthZ     100;
+        
+    }
+
+    refinementDomainCenter
+    {
+        type        box;
+        additionalRefinementLevels 2;  
+        
+        centre      (50.0 0.0 0.0);
+        
+        lengthX     100;
+        lengthY     #calc "$DIAMETER * 17";
+        lengthZ     #calc "$DIAMETER * 17";
+        
+    }
 
     refinement0
     {
@@ -92,7 +117,7 @@ objectRefinements
         
     }
 
-    nose_lenght1
+    nose_length1
     {
         type        box;
         additionalRefinementLevels 8;  
@@ -105,7 +130,7 @@ objectRefinements
         
     }
 
-    nose_lenght2
+    nose_length2
     {
         type        box;
         additionalRefinementLevels 9;  
@@ -128,7 +153,7 @@ objectRefinements
         radius      #calc "$ROUND_TIP_R * 3";
     }
 
-    aft_lenght1
+    aft_length1
     {
         type        cone;
         additionalRefinementLevels 9;

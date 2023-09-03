@@ -117,7 +117,7 @@ objectRefinements
         
     }
 
-    nose_lenght1
+    nose_length1
     {
         type        cone;
         additionalRefinementLevels 8;  
@@ -130,7 +130,7 @@ objectRefinements
         
     }
 
-    nose_lenght2
+    nose_length2
     {
         type        cone;
         additionalRefinementLevels 9;  
@@ -143,7 +143,7 @@ objectRefinements
 
     }
 
-    nose_lenght3
+    nose_length3
     {
         type        cone;
         additionalRefinementLevels 10;  
@@ -197,7 +197,7 @@ objectRefinements
     }
 
 
-    aft_lenght1
+    aft_length1
     {
         type        cone;
         additionalRefinementLevels 10;
@@ -303,10 +303,10 @@ objectRefinements
         additionalRefinementLevels 12;
         
         p0      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2" 0.0 0.0);;
-        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.01" 0.0 0.0);;
+        p1      (#calc "$POS_AFT_CENTER_X + $AFT_LENGTH / 2 - 0.007" 0.0 0.0);;
         
         radius0     #calc "1.52*0.0254 / 2";
-        radius1     #calc "1.65*0.0254 / 2";
+        radius1     #calc "1.60*0.0254 / 2";
        
     }
 }

@@ -117,7 +117,7 @@ objectRefinements
         
     }
 
-    nose_lenght1
+    nose_length1
     {
         type        cone;
         additionalRefinementLevels 8;  
@@ -130,7 +130,7 @@ objectRefinements
         
     }
 
-    nose_lenght2
+    nose_length2
     {
         type        cone;
         additionalRefinementLevels 9;  
@@ -143,7 +143,7 @@ objectRefinements
 
     }
 
-    nose_lenght3
+    nose_length3
     {
         type        cone;
         additionalRefinementLevels 10;  
@@ -187,7 +187,7 @@ objectRefinements
     }
 
 
-    aft_lenght1
+    aft_length1
     {
         type        cone;
         additionalRefinementLevels 10;

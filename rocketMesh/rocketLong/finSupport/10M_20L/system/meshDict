@@ -115,7 +115,7 @@ objectRefinements
     }
 
 
-    nose_lenght1
+    nose_length1
     {
         type        box;
         additionalRefinementLevels 7;  
@@ -128,7 +128,7 @@ objectRefinements
         
     }
 
-    nose_lenght2
+    nose_length2
     {
         type        box;
         additionalRefinementLevels 8;  
@@ -141,7 +141,7 @@ objectRefinements
         
     }
 
-    nose_lenght3
+    nose_length3
     {
         type        box;
         additionalRefinementLevels 9;  
@@ -164,7 +164,7 @@ objectRefinements
         radius      #calc "$ROUND_TIP_R * 3";
     }
 
-    aft_lenght1
+    aft_length1
     {
         type        box;
         additionalRefinementLevels 8;
@@ -177,7 +177,7 @@ objectRefinements
         
     }
 
-    aft_lenght2
+    aft_length2
     {
         type        box;
         additionalRefinementLevels 9;

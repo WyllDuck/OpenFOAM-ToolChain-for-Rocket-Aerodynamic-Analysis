@@ -118,7 +118,7 @@ objectRefinements
         
     }
 
-    nose_lenght1
+    nose_length1
     {
         type        cone;
         additionalRefinementLevels 8;  
@@ -131,25 +131,25 @@ objectRefinements
         
     }
 
-    nose_lenght2
+    nose_length2
     {
         type        cone;
         additionalRefinementLevels 9;  
         
-        p0      (#calc "$NOSE_LENGTH * 0.12 + (- $NOSE_LENGHT * 0.2)" 0.0 0.0);
-        p1      (#calc "$NOSE_LENGTH * 0.12 + ($NOSE_LENGHT * 0.2)" 0.0 0.0);
+        p0      (#calc "$NOSE_LENGTH * 0.12 + (- $NOSE_LENGTH * 0.2)" 0.0 0.0);
+        p1      (#calc "$NOSE_LENGTH * 0.12 + ($NOSE_LENGTH * 0.2)" 0.0 0.0);
         
         radius0     #calc "$DIAMETER / 2 * 0.7";
         radius1     #calc "$DIAMETER / 2 * 0.7";
 
     }
 
-    nose_lenght3
+    nose_length3
     {
         type        cone;
         additionalRefinementLevels 10;  
         
-        p0      (#calc "$NOSE_LENGTH * 0.05 + (- $NOSE_LENGHT * 0.1)" 0.0 0.0);
+        p0      (#calc "$NOSE_LENGTH * 0.05 + (- $NOSE_LENGTH * 0.1)" 0.0 0.0);
         p1      (#calc "$NOSE_LENGTH * 0.05 + ($NOSE_LENGTH * 0.1)" 0.0 0.0);
         
         radius0     #calc "$DIAMETER / 2 * 0.4";
@@ -177,7 +177,7 @@ objectRefinements
         radius      #calc "$ROUND_TIP_R * 3";
     }
 
-    aft_lenght1
+    aft_length1
     {
         type        cone;
         additionalRefinementLevels 10;

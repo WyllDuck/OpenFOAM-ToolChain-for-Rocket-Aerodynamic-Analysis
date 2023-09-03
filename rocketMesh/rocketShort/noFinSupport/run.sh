@@ -32,10 +32,3 @@ chmod +x All*
 ./Allclean
 ./Allrun
 cd ..
-
-cd R5
-sed -i -e 's/\r$//' All*
-chmod +x All*
-./Allclean
-./Allrun
-cd ..
