@@ -37,7 +37,7 @@ solvers
         solver          smoothSolver;
         smoother        symGaussSeidel;
         tolerance       1e-14;
-        relTol          0.1;
+        relTol          0.01;
         minIter         1;
     }
 
