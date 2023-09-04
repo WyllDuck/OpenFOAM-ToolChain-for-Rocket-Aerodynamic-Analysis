@@ -1,10 +1,3 @@
-cd R0
-sed -i -e 's/\r$//' All*
-chmod +x All*
-./Allclean
-./Allrun
-cd ..
-
 cd R1
 sed -i -e 's/\r$//' All*
 chmod +x All*
