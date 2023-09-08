@@ -25,7 +25,7 @@ surfaces1
         {
             type            patch;
             patches         ("symmetryPatch");
-            interpolate     true;
+            interpolate     false;
             invariant       true;  // Unaffected by mesh motion
         }
     }

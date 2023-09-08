@@ -48,6 +48,10 @@ adjustTimeStep  yes;
 
 maxCo           0.2;
 
+rDeltaTSmoothingCoeff 0.1;
+
+rDeltaTDampingCoeff 0.9;
+
 maxDeltaT       1;
 
 functions
