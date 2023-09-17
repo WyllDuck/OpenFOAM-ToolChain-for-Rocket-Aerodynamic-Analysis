@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+application     rhoPimpleFoam;
 
 startFrom       latestTime;
 
@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         {{ minIter + 1 }};
+endTime         {{ minIter + 50000 }};
 
 deltaT          1;
 
@@ -34,19 +34,19 @@ purgeWrite      5;
 
 writeFormat     binary;
 
-writePrecision  6;
+writePrecision  8;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   10;
+timePrecision   6;
 
 runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.04;
+maxCo           {{ final_Co }};
 
 rDeltaTSmoothingCoeff 0.1;
 
@@ -66,6 +66,7 @@ functions
     #include "FOs/FOwallShearStress"
 
     #include "FOs/FOsurfaces"
+    #include "FOs/FOrunTimeControl" // Added here only, last controlDict update
 
     #include "fileUpdater"
 

@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+// controlDict
+fileUpdate1
+{
+    type              timeActivatedFileUpdate;
+    libs              ("libutilityFunctionObjects.so");
+    writeControl      timeStep;
+    writeInterval     1;
+    fileToUpdate      "$FOAM_CASE/system/controlDict";
+    timeVsFile
+    (
+        (-1             "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
+        ({{ minIter }}  "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_final")
+
+    );
+}

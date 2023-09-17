@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+application     rhoPimpleFoam;
 
 startFrom       latestTime;
 
@@ -34,19 +34,19 @@ purgeWrite      5;
 
 writeFormat     binary;
 
-writePrecision  6;
+writePrecision  8;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   10;
+timePrecision   6;
 
 runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.04;
+maxCo           0.4;
 
 rDeltaTSmoothingCoeff 0.1;
 

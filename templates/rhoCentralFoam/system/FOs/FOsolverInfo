@@ -11,10 +11,7 @@ solverInfo1
     // Mandatory entries
     type            solverInfo;
     libs            (utilityFunctionObjects);
-    fields
-    (
-        U e k omega rho rhoE rhoU
-    )
+    fields          (".*");
 
     // Optional entries
     writeResidualFields    true;
