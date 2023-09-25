@@ -22,11 +22,11 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         40000;
+endTime         {{ minIter + 1 }};
 
 deltaT          1;
 
-writeControl    adjustable;
+writeControl    adjustableRunTime;
 
 writeInterval   50;
 
