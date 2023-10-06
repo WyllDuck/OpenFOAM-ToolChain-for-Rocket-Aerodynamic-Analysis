@@ -31,7 +31,7 @@ boundaryField
 
     wallPatch
     {
-        type            kqRWallFunction;
+        type            kLowReWallFunction;
         value           $internalField;
     }
 
