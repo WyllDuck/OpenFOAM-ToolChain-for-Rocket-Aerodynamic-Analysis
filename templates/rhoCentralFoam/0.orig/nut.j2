@@ -26,18 +26,18 @@ boundaryField
         value           uniform 0;
     }
 
-    {% if wallModelnutOFF %}
-    // Low Reynolds number wall function for nut -> nut = 0
-    wallPatch
-    {
-        type            nutLowReWallFunction;
-        value           uniform 0;
-    }
-    {% else %}
+    {% if wallModelnut %}
     // Wall function for nut for high Reynolds number flows -> nut calculated from k
     wallPatch
     {
         type            nutkWallFunction;
+        value           uniform 0;
+    }
+    {% else %}
+    // Low Reynolds number wall function for nut -> nut = 0
+    wallPatch
+    {
+        type            nutLowReWallFunction;
         value           uniform 0;
     }
     {% endif %}
