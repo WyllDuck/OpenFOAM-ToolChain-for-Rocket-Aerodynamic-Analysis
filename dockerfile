@@ -14,6 +14,7 @@ RUN apt-get install -y git
 RUN apt-get install -y htop
 RUN apt-get install -y build-essential
 RUN apt-get install -y software-properties-common
+RUN apt-get install -y gnuplot
 
 RUN apt-get install -y python3-pip
 RUN pip install jinja2-cli
