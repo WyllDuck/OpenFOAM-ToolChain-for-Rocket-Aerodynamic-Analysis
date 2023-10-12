@@ -1,0 +1,15 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
+flowVelocity         {{ "({} {} {})".format(flowVelocity[0], flowVelocity[1], flowVelocity[2]) }};
+pressure             {{ pressure }};
+temperature          {{ temperature }};
+turbulentKE          {{ turbulentKE }};
+turbulentOmega       {{ turbulentOmega }};
+
+// ************************************************************************* //

@@ -1,0 +1,75 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     rhoCentralFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         {{ minIter + 50000 }};
+
+deltaT          1;
+
+writeControl    adjustableRunTime;
+
+writeInterval   50;
+
+purgeWrite      {{ purgeWrite }};
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   10;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           {{ final_Co }};
+
+rDeltaTSmoothingCoeff 0.1;
+
+rDeltaTDampingCoeff 0.9;
+
+maxDeltaT       1;
+
+functions
+{
+
+    #include "FOs/FOsolverInfo"
+    #include "FOs/FOforceCoeffs"
+
+    #include "FOs/FOyPlus"
+    #include "FOs/FOCourantNo"
+    #include "FOs/FOMach"
+    #include "FOs/FOwallShearStress"
+
+    #include "FOs/FOsurfaces"
+    #include "FOs/FOrunTimeControl" // Added here only, last controlDict update
+
+    #include "fileUpdater"
+
+}
+
+// ************************************************************************* //

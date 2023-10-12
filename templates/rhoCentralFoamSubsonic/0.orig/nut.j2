@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nut;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    "(.*)"
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+
+    {% if wallModelnut %}
+    // Wall function for nut for high Reynolds number flows -> nut calculated from k
+    wallPatch
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    {% else %}
+    // Low Reynolds number wall function for nut -> nut = 0
+    wallPatch
+    {
+        type            nutLowReWallFunction;
+        value           uniform 0;
+    }
+    {% endif %}
+
+    symmetryPatch
+    {
+        type            symmetry;
+    }
+
+    #includeEtc "caseDicts/setConstraintTypes"
+}
+
+
+// ************************************************************************* //

@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+runTimeControl1
+{
+    type            runTimeControl;
+    libs            ("libutilityFunctionObjects.so");
+    conditions
+    {
+        condition0
+        {
+            type            average;
+            functionObject  forceCoeffs1;
+            fields          (Cd);
+            tolerance       {{ coeffs_variation[0] }};
+            window          {{ coeffs_range[0] }};
+            base            iter;
+            windowType      approximate;
+            groupID         1;
+        }
+
+        condition1
+        {
+            type            average;
+            functionObject  forceCoeffs1;
+            fields          (Cl);
+            tolerance       {{ coeffs_variation[1] }};
+            window          {{ coeffs_range[1] }};
+            base            iter;
+            windowType      approximate;
+            groupID         1;
+        }
+
+        condition2
+        {
+            type            average;
+            functionObject  forceCoeffs1;
+            fields          (CmPitch);
+            tolerance       {{ coeffs_variation[2] }};
+            window          {{ coeffs_range[2] }};
+            base            iter;
+            windowType      approximate;
+            groupID         1;
+        }
+    }
+}
