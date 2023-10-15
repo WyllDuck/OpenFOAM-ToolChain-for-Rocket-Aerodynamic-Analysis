@@ -10,65 +10,20 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      turbulenceProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoPimpleFoam;
+simulationType          RAS;
 
-startFrom       latestTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         40000;
-
-deltaT          1;
-
-writeControl    adjustable;
-
-writeInterval   50;
-
-purgeWrite      5;
-
-writeFormat     binary;
-
-writePrecision  8;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           0.4;
-
-rDeltaTSmoothingCoeff 0.1;
-
-rDeltaTDampingCoeff 0.9;
-
-maxDeltaT       1;
-
-functions
+RAS
 {
+    RASModel            kOmegaSST;
 
-    #include "FOs/FOsolverInfo"
-    #include "FOs/FOforceCoeffs"
+    turbulence          on;
 
-    #include "FOs/FOyPlus"
-    #include "FOs/FOCourantNo"
-    #include "FOs/FOMach"
-    #include "FOs/FOwallShearStress"
-
-    #include "FOs/FOsurfaces"
-
-    #include "fileUpdater"
-
+    printCoeffs         on;
 }
+
 
 // ************************************************************************* //

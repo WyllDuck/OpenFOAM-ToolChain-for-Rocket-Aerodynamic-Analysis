@@ -10,38 +10,45 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      k;
+    object      p;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #include        "include/initialConditions"
 
-dimensions      [0 2 -2 0 0 0 0];
+dimensions      [1 -1 -2 0 0 0 0];
 
-internalField   uniform $turbulentKE;
+internalField   uniform $pressure;
 
 boundaryField
 {
-    "(.*)"
-    {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
-    }
-
     wallPatch
     {
-        type            kLowReWallFunction;
-        value           $internalField;
+        type            zeroGradient;
+    }
+
+    inletPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
+    }
+
+    outletPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
+    }
+
+    farFieldPatch
+    {
+        type            freestreamPressure;
+        freestreamValue $internalField;
     }
 
     symmetryPatch
     {
-        type            symmetry;
+        type            symmetry; // symmetryPlane might cause problems if the surface is not perfectly flat 
     }
-
-    #includeEtc "caseDicts/setConstraintTypes"
 }
-
 
 // ************************************************************************* //

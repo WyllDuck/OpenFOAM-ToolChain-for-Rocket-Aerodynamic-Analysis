@@ -9,36 +9,13 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      nut;
+    class       dictionary;
+    object      fvSolution;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -1 0 0 0 0];
-
-internalField   uniform 0;
-
-boundaryField
+solvers
 {
-    "(.*)"
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-
-    wallPatch
-    {
-        type            nutkWallFunction;
-        value           uniform 0;
-    }
-
-    symmetryPatch
-    {
-        type            symmetry;
-    }
-
-    #includeEtc "caseDicts/setConstraintTypes"
 }
-
 
 // ************************************************************************* //

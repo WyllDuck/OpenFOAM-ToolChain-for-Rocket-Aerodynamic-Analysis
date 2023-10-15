@@ -10,30 +10,37 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      k;
+    object      nut;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-#include        "include/initialConditions"
+dimensions      [0 2 -1 0 0 0 0];
 
-dimensions      [0 2 -2 0 0 0 0];
-
-internalField   uniform $turbulentKE;
+internalField   uniform 0;
 
 boundaryField
 {
     "(.*)"
     {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
+        type            calculated;
+        value           uniform 0;
     }
 
+    {% if wallModelnut %}
+    // Wall function for nut for high Reynolds number flows -> nut calculated from k
     wallPatch
     {
-        type            kLowReWallFunction;
-        value           $internalField;
+        type            nutkWallFunction;
+        value           uniform 0;
     }
+    {% else %}
+    // Low Reynolds number wall function for nut -> nut = 0
+    wallPatch
+    {
+        type            nutLowReWallFunction;
+        value           uniform 0;
+    }
+    {% endif %}
 
     symmetryPatch
     {

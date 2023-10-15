@@ -1,0 +1,83 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+// controlDict
+fileUpdate1
+{
+    type              timeActivatedFileUpdate;
+    libs              ("libutilityFunctionObjects.so");
+    writeControl      timeStep;
+    writeInterval     1;
+    fileToUpdate      "$FOAM_CASE/system/controlDict";
+    timeVsFile
+    (
+        (-1  "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
+        (20 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_2")  
+        (35 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_3")  
+        (50 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")  
+        (65 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_5")  
+        (80 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")  
+        (100 "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        
+        {% if vanLeer != -1 %} 
+        // Repeat cycle for 'vanLeer'
+        // NOTE: Wait for stability with 'upwind' to change to 'vanLeer'
+        
+        {% if (vanLeer + 0) < minIter and final_Co >= 0.01 %} 
+        ({{ vanLeer + 0}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_1")
+        {% endif %}
+        
+        {% if (vanLeer + 20) < minIter and final_Co >= 0.02 %} 
+        ({{ vanLeer + 20}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_2")
+        {% endif %}
+        
+        {% if (vanLeer + 35) < minIter and final_Co >= 0.04 %} 
+        ({{ vanLeer + 35}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_3")
+        {% endif %}
+        
+        {% if (vanLeer + 150) < minIter and final_Co >= 0.08 %} 
+        ({{ vanLeer + 150}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_4")
+        {% endif %}
+        
+        {% if (vanLeer + 300) < minIter and final_Co >= 0.16 %} 
+        ({{ vanLeer + 300}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_5")
+        {% endif %}
+        
+        {% if (vanLeer + 800) < minIter and final_Co >= 0.32 %} 
+        ({{ vanLeer + 800}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_6")
+        {% endif %}
+        
+        {% if (vanLeer + 2000) < minIter and final_Co >= 0.50 %} 
+        ({{ vanLeer + 2000}} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_7")
+        {% endif %}
+        
+        {% endif %}
+
+        // Add runTimeControl End Conditions
+        ({{ minIter }} "$FOAM_CASE/system/fileUpdaterControlDict/controlDict_final")
+
+    );
+}
+
+fileUpdate2
+{
+    type              timeActivatedFileUpdate;
+    libs              ("libutilityFunctionObjects.so");
+    writeControl      timeStep;
+    writeInterval     1;
+    fileToUpdate      "$FOAM_CASE/system/fvSchemes";
+    timeVsFile
+    (
+        (-1  "$FOAM_CASE/system/fvSchemesUpWind")
+        {% if vanLeer != -1 %}
+        // NOTE: vanLeer is more unstable thus it is better to save the iteration 150 
+        //       (every 50 iterations there is a save) before making the change to this more unstable scheme.
+        ({{ vanLeer + 0}} "$FOAM_CASE/system/fvSchemesVanLeer")
+        {% endif %}
+    );
+}

@@ -10,15 +10,15 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      k;
+    object      omega;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #include        "include/initialConditions"
 
-dimensions      [0 2 -2 0 0 0 0];
+dimensions      [0 0 -1 0 0 0 0];
 
-internalField   uniform $turbulentKE;
+internalField   uniform $turbulentOmega;
 
 boundaryField
 {
@@ -31,7 +31,7 @@ boundaryField
 
     wallPatch
     {
-        type            kLowReWallFunction;
+        type            omegaWallFunction;
         value           $internalField;
     }
 

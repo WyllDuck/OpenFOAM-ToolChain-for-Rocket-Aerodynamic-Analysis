@@ -18,10 +18,10 @@ solvers
 {
     p
     {
-        solver          PCG;
-        preconditioner  DIC;
+        solver          PBiCGStab;
+        preconditioner  DILU;
         tolerance       1e-15;
-        relTol          0.1;
+        relTol          0.01;
         minIter         1;
     }
 
@@ -37,7 +37,7 @@ solvers
         solver          smoothSolver;
         smoother        symGaussSeidel;
         tolerance       1e-14;
-        relTol          0.1;
+        relTol          0.01;
         minIter         1;
     }
 
@@ -53,17 +53,20 @@ PIMPLE
 {
     momentumPredictor        yes;
     nCorrectors              2;
-    nNonOrthogonalCorrectors 3;
+    nNonOrthogonalCorrectors 1;
     nOuterCorrectors         1;
     
+    // NOTE: transonic activated at 0.5 Mach frestream, recomendation
+    transonic       yes;    // Transonic flow ON
+
     pMinFactor      0.02;
     pMaxFactor      4;
 
-    maxCo                   0.6;
-    rDeltaTSmoothingCoeff   0.1;
-    rDeltaTDampingCoeff     1;
-    maxDeltaT               1;
+    // NOTE: Can be defined in the controlDict file
+    // maxCo                   {{ maxCo }};
+    // rDeltaTSmoothingCoeff   0.1;
+    // rDeltaTDampingCoeff     1;
+    // maxDeltaT               1;
 }
-
 
 // ************************************************************************* //

@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoPimpleFoam;
+application     rhoCentralFoam;
 
 startFrom       latestTime;
 
@@ -22,11 +22,11 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         40000;
+endTime         4000;
 
 deltaT          1;
 
-writeControl    adjustable;
+writeControl    adjustableRunTime;
 
 writeInterval   50;
 
@@ -34,19 +34,19 @@ purgeWrite      5;
 
 writeFormat     binary;
 
-writePrecision  8;
+writePrecision  6;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   10;
 
 runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.4;
+maxCo           0.2;
 
 rDeltaTSmoothingCoeff 0.1;
 
@@ -68,7 +68,6 @@ functions
     #include "FOs/FOsurfaces"
 
     #include "fileUpdater"
-
 }
 
 // ************************************************************************* //

@@ -9,39 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      k;
+    class       volVectorField;
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #include        "include/initialConditions"
 
-dimensions      [0 2 -2 0 0 0 0];
+dimensions      [0 1 -1 0 0 0 0];
 
-internalField   uniform $turbulentKE;
+internalField   uniform $flowVelocity;
 
 boundaryField
 {
-    "(.*)"
-    {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
-    }
-
     wallPatch
     {
-        type            kLowReWallFunction;
-        value           $internalField;
+        type            noSlip;
+    }
+
+    inletPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
+
+    outletPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
+
+    farFieldPatch
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
     }
 
     symmetryPatch
     {
-        type            symmetry;
+        type            symmetry; // symmetryPlane might cause problems if the surface is not perfectly flat 
     }
-
-    #includeEtc "caseDicts/setConstraintTypes"
 }
-
 
 // ************************************************************************* //
