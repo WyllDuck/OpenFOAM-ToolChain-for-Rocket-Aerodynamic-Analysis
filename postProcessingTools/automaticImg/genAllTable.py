@@ -1,4 +1,5 @@
 import os, sys
+import pandas as pd
 from genReport import write_report
 from VTKtoIMAGE import default1
 
@@ -16,31 +17,36 @@ def get_subfolders(paths):
     return subfolders
 
 
-def execute_functions(path):
+def execute_functions(path, generate_images=True):
     """
     Given a list of paths, executes the genReport and VTKtoIMAGE functions on each subfolder.
     """
+
+    print("=====================================================================================================")
+    print("\n\n")
+    print("Executing functions for {}".format(path))
 
     window_size = 50
     solver_extensions = ['rhoCentralFoam', 'rhoPimpleFoam', 'simpleFoam', 'rhoSimpleFoam']
     REPORT = write_report(path, WINDOW_SIZE=window_size, SOLVER_EXTENSIONS=solver_extensions, show=True)
     
     # if the report is empty because no execution was found, return
-    if REPORT is None:
-        return    
+    if REPORT is None or generate_images is False:
+        return REPORT
 
     surface_path = os.path.join(path, 'postProcessing', 'surfaces1')
-    max_subfolder = 0.0
+    max_subfolder_num = 0.0
+    max_subfolder_str = ''
 
     # loop through all the subfolders in the path and select the one with the highest number use os    
     for subfolder in os.listdir(surface_path):
         try:
-            if float(subfolder) > max_subfolder:
-                max_subfolder = float(subfolder)
+            if float(subfolder) > max_subfolder_num:
+                max_subfolder_num = float(subfolder)
+                max_subfolder_str = subfolder
         except ValueError:
             pass
-    max_subfolder = str(max_subfolder)
-    surface_path = os.path.join(surface_path, max_subfolder, 'planeXZ')
+    surface_path = os.path.join(surface_path, max_subfolder_str, 'planeXZ.vtp')
 
     # create folder to save the images
     save_path = os.path.join(path, 'images')
@@ -50,12 +56,129 @@ def execute_functions(path):
     # run the default1 function to generate the images
     default1(surface_path, save_path=save_path)
 
-    return
+    return REPORT
+
+
+# class holding all reports
+class ReportContainer(object):
+
+    def __init__(self):
+        self.reports = []
+
+    def add(self, report):
+        self.reports.append(report)
+
+    def write_csv(self, path):
+        
+        headers = ["OPENFOAM_WORKSPACE_DIR", "YPLUS_MIN", "YPLUS_MAX", "YPLUS_AVG", "CA_FINAL_COEFF", "CN_FINAL_COEFF", "CM_FINAL_COEFF", "CA_FINAL_COEFF_WINDOW", "CN_FINAL_COEFF_WINDOW", "CM_FINAL_COEFF_WINDOW", "WINDOW_SIZE", "TOTAL_STATUS_CODE", "EXECUTION_TIME", "NUMBER_ITERATIONS", "SOLVER_NAME", "ITERRATIONS_PER_EXECUTION_TIME", "LAST_MODIFICATION_DATE"]
+
+        # add all HEADERS_RESIDUALS to the column names, loop through all reports
+        headers_set = set()
+        for report in self.reports:
+
+            if report is None:
+                print("Error: report is None\n{}".format(report["OPENFOAM_WORKSPACE_DIR"]))
+                continue
+            if report['HEADERS_RESIDUALS'] is None:
+                print("Error: report['HEADERS_RESIDUALS'] is None\n{}".format(report["OPENFOAM_WORKSPACE_DIR"]))
+                continue
+            if report['LOG_LIST'] is None:
+                print("Error: report['LOG_LIST'] is None\n{}".format(report["OPENFOAM_WORKSPACE_DIR"]))
+                continue
+
+            for header in report['HEADERS_RESIDUALS']:
+                headers_set.add("residual_"+header)
+            for header in report['LOG_LIST']:
+                headers_set.add(header)
+
+        headers_set = list(headers_set)
+
+        """
+        OTHER HEADERS:
+
+        - OPENFOAM_WORKSPACE_DIR
+        - YPLUS_MIN
+        - YPLUS_MAX
+        - YPLUS_AVG
+        - CA_FINAL_COEFF
+        - CN_FINAL_COEFF
+        - CM_FINAL_COEFF
+        - CA_FINAL_COEFF_WINDOW
+        - CN_FINAL_COEFF_WINDOW
+        - CM_FINAL_COEFF_WINDOW
+        - WINDOW_SIZE
+        - TOTAL_STATUS_CODE
+        - EXECUTION_TIME
+        - NUMBER_ITERATIONS
+        - SOLVER_NAME
+        - ITERRATIONS_PER_EXECUTION_TIME
+        - LAST_MODIFICATION_DATE
+        """
+
+        # add the other headers
+        headers += headers_set
+
+        # create pandas dataframe with the headers and fill it with the data from the reports
+        df = pd.DataFrame(columns=headers)
+
+        i = 0
+        k = 0
+        while i < len(self.reports):
+            report = self.reports[i]
+            print("Processing report {}/{} - {}".format(i+1, len(self.reports), self.reports[i]["OPENFOAM_WORKSPACE_DIR"]))
+
+            # create row with all the data
+            row = {}
+            for header in headers:
+                try:
+                    row[header] = report[header]
+                except KeyError:
+                    row[header] = None
+
+            # add HEADER_RESIDUALS to the row
+            if report['HEADERS_RESIDUALS'] is not None:
+                for header in report['HEADERS_RESIDUALS']:
+                    index = report['HEADERS_RESIDUALS'].index(header)
+                    row["residual_"+header] = report['FINAL_RESIDUALS'][index]
+
+            # add LOG_LIST to the row
+            if report['LOG_LIST'] is not None:
+                for header in report['LOG_LIST']:
+                    index = report['LOG_LIST'].index(header)
+                    row[header] = report['STATUS_CODE'][index]
+
+            row["CA_FINAL_COEFF"] = report["FINAL_COEFFS"][0]
+            row["CN_FINAL_COEFF"] = report["FINAL_COEFFS"][1]
+            row["CM_FINAL_COEFF"] = report["FINAL_COEFFS"][2]
+
+            row["CA_FINAL_COEFF_WINDOW"] = report["FINAL_COEFFS_WINDOW"][0]
+            row["CN_FINAL_COEFF_WINDOW"] = report["FINAL_COEFFS_WINDOW"][1]
+            row["CM_FINAL_COEFF_WINDOW"] = report["FINAL_COEFFS_WINDOW"][2]
+
+            for j in range(len(report["L_EXECUTION_TIME"])):
+                row["EXECUTION_TIME"] = report["L_EXECUTION_TIME"][j]
+                row["NUMBER_ITERATIONS"] = report["L_NUMBER_ITERATIONS"][j]
+                row["SOLVER_NAME"] = report["L_SOLVER_NAME"][j]
+                row["ITERRATIONS_PER_EXECUTION_TIME"] = report["L_ITERRATIONS_PER_EXECUTION_TIME"][j]
+                row["LAST_MODIFICATION_DATE"] = report["L_LAST_MODIFICATION_DATE"][j]
+
+                # add the row to the dataframe
+                df.loc[k] = row
+                k += 1
+            i += 1
+
+        # write the dataframe to csv
+        df.to_csv(path, index=False)
+        
+        return
 
 
 # main
 # read the paths as args
 def main ():
+
+    # instantiate the report container
+    REPORTS = ReportContainer()
     
     # read path from args
     paths = sys.argv[1:]
@@ -74,9 +197,30 @@ def main ():
     if confirmation != 'y':
         return
     
+    # ask if iamges should be generated
+    print("Do you want to generate images? (y/n)")
+    generate_images = input()
+    if generate_images == 'y':
+        generate_images = True
+    else:
+        generate_images = False
+    
     # execute the functions
     for path in EXECUTION_FOLDERS:
-        execute_functions(path)
+        REPORT = execute_functions(path, generate_images=generate_images)
+        if REPORT is not None:
+            REPORTS.add(REPORT)
+
+
+    # get execution location in cmd
+    WORK_DIR = os.getcwd()
+    print("=====================================================================================================")
+    print("=====================================================================================================")
+
+    print("Execution finished. CSV with all reports is saved in:\n {}".format(os.path.join(WORK_DIR, 'reports.csv')))
+
+    # write csv of all reports together
+    REPORTS.write_csv(os.path.join(WORK_DIR, 'reports.csv'))
 
     return
 

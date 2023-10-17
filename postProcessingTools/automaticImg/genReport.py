@@ -184,7 +184,7 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
                 LOG_LIST.append(FILE_PATH)
 
     if len(LOG_LIST) == 0:
-        return None, None, None, None, None
+        return [None], [None], [None], [None], [None]
 
     # LIST of EXECUTION_TIME, NUMBER_ITERATIONS, SOLVER_NAME, ITERRATIONS_PER_EXECUTION_TIME
     L_EXECUTION_TIME = [None] * len(LOG_LIST)
@@ -215,9 +215,8 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
 
         for line in log_lines[::-1]:
             if 'ExecutionTime' in line and EXECUTION_TIME is None:
-                EXECUTION_TIME = line.split(' ')[2]
-                # try to convert to float
                 try:
+                    EXECUTION_TIME = line.split(' ')[2]
                     EXECUTION_TIME = float(EXECUTION_TIME)
                 except:
                     EXECUTION_TIME = None
@@ -225,9 +224,8 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
                 continue
 
             if 'Time' in line and NUMBER_ITERATIONS is None:
-                NUMBER_ITERATIONS = line.split(' ')[2]
-                # try to convert to float
                 try:
+                    NUMBER_ITERATIONS = line.split(' ')[2]
                     NUMBER_ITERATIONS = float(NUMBER_ITERATIONS)
                 except:
                     NUMBER_ITERATIONS = None
