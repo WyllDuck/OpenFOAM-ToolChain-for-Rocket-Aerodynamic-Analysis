@@ -13,7 +13,7 @@ from paraview.simple import *
 
 
 
-def capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scale, save_name = None):
+def capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scale, save_name = None, save_path = None):
 
     # use date for naming file
     if save_name is None:
@@ -21,6 +21,10 @@ def capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scal
     sleep(1) # make sure the file name is unique
 
     save_name = str(field) + '_' + save_name
+
+    # extract path from FILE_PATH
+    if save_path is None:
+        save_path = os.path.dirname(FILE_PATH)
 
     # Disable automatic camera reset on 'Show'
     paraview.simple._DisableFirstRenderCameraReset()
@@ -50,7 +54,7 @@ def capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scal
     layout1.SetSize(800, 600)
     
     # Save a screenshot
-    save_path = '{}/{}'.format(WORK_DIR, save_name)
+    save_path = os.path.join(save_path, save_name)
     SaveScreenshot(save_path, renderView1, ImageResolution=[3200, 2400], OverrideColorPalette='WhiteBackground')
     
     Disconnect()
@@ -62,7 +66,7 @@ def capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scal
 
 
 
-def list_of_capture_screenshots (FILE_PATH, _camera_positions, _fields, _view_ups, _parallel_scales, _save_names = None):
+def list_of_capture_screenshots (FILE_PATH, _camera_positions, _fields, _view_ups, _parallel_scales, _save_names = None, save_path = None):
 
     if _save_names is None:
         _save_names = [None] * len(_camera_positions)
@@ -76,12 +80,12 @@ def list_of_capture_screenshots (FILE_PATH, _camera_positions, _fields, _view_up
         parallel_scale = _parallel_scales[i]
 
         for field in fields:
-            capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scale, save_name=save_name.format(field))
+            capture_screenshot(FILE_PATH, field, camera_position, view_up, parallel_scale, save_name=save_name.format(field), save_path=save_path)
 
     return
 
 # This is the default screenshots that we need
-def default1 (FILE_PATH):
+def default1 (FILE_PATH, save_path = None):
 
     camera_positions = [
         [0.6223108544688549, 2.7899207451118118, 0], # all
@@ -113,7 +117,7 @@ def default1 (FILE_PATH):
         0.060588150906668324,
     ]
 
-    list_of_capture_screenshots(FILE_PATH, camera_positions, fields, view_ups, parallel_scales, save_names)
+    list_of_capture_screenshots(FILE_PATH, camera_positions, fields, view_ups, parallel_scales, save_names, save_path=save_path)
 
 
 if __name__ == '__main__':

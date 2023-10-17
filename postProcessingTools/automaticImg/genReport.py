@@ -7,13 +7,23 @@ import os
 # read yPlus data
 # returns: yPlus_min, yPlus_max, yPlus_avg
 def read_yPlus (FILE_PATH):
-    yPlus = pd.read_csv(FILE_PATH, sep='\t', header=None, skiprows=2).to_numpy()
+    try: 
+        yPlus = pd.read_csv(FILE_PATH, sep='\t', header=None, skiprows=2).to_numpy()
+    except:
+        print(f'Error reading yPlus file {FILE_PATH}')
+        return None, None, None
+    
     return yPlus[-1, 2], yPlus[-1, 3], yPlus[-1, 4] # min, max, average 
 
 # read forces data
 # returns: Cd, Cl, Cm
 def read_forces (FILE_PATH, WINDOW_SIZE=50, save_plot=None):
-    forces = pd.read_csv(FILE_PATH, sep='\t', header=None, skiprows=13).to_numpy()
+    try:
+        forces = pd.read_csv(FILE_PATH, sep='\t', header=None, skiprows=13).to_numpy()
+    except:
+        print(f'Error reading forces file {FILE_PATH}')
+        return [None, None, None], [None, None, None], None
+    
     LAST = forces[-1, 1], forces[-1, 4], forces[-1, 7] # Cd, Cl, Cm
 
     # moving average last WINDOW_SIZE elements
@@ -30,9 +40,12 @@ def read_forces (FILE_PATH, WINDOW_SIZE=50, save_plot=None):
 # read residuals data
 # returns: residuals
 def read_residuals (FILE_PATH, save_plot=None):
-
-    # read residuals with header
-    residuals = pd.read_csv(FILE_PATH, sep='\t', skiprows=1)
+    try:
+        residuals = pd.read_csv(FILE_PATH, sep='\t', skiprows=1)
+    except:
+        print(f'Error reading residuals file {FILE_PATH}')
+        return None, None
+    
     residuals.rename(columns=lambda x: x.replace(" ", ""), inplace=True)
     
     # find all headers with '_initial' written in them - pandas
@@ -151,7 +164,7 @@ def read_log_file (FOLDER_PATH):
         LOG_LIST[i] = os.path.basename(LOG_LIST[i])
 
     # return STATUS_CODE list, if all elements are 1, then return 1
-    if sum(STATUS_CODE) == len(STATUS_CODE):
+    if sum(STATUS_CODE) == len(STATUS_CODE) and len(LOG_LIST) != 0:
         return 1, LOG_LIST, STATUS_CODE
     else:
         return 0, LOG_LIST, STATUS_CODE
@@ -171,13 +184,14 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
                 LOG_LIST.append(FILE_PATH)
 
     if len(LOG_LIST) == 0:
-        return None, None, None, None
+        return None, None, None, None, None
 
     # LIST of EXECUTION_TIME, NUMBER_ITERATIONS, SOLVER_NAME, ITERRATIONS_PER_EXECUTION_TIME
     L_EXECUTION_TIME = [None] * len(LOG_LIST)
     L_NUMBER_ITERATIONS = [None] * len(LOG_LIST)
     L_SOLVER_NAME = [None] * len(LOG_LIST)
     L_ITERRATIONS_PER_EXECUTION_TIME = [None] * len(LOG_LIST)
+    L_LAST_MODIFICATION_DATE = [None] * len(LOG_LIST)
 
     for i in range(len(LOG_LIST)):
     
@@ -185,6 +199,7 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
         NUMBER_ITERATIONS = None
         SOLVER_NAME = None
         ITERRATIONS_PER_EXECUTION_TIME = None
+        LAST_MODIFICATION_DATE = None
         
         log_file = open(LOG_LIST[i], 'r')
         log_lines = log_file.readlines()
@@ -192,6 +207,11 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
         # get file log name without path and extension using os library
         file_name = os.path.basename(LOG_LIST[i])
         SOLVER_NAME = file_name.split('.')[1]
+
+        # get last modification date - year-month-day hour:minute:second
+        LAST_MODIFICATION_DATE = os.path.getmtime(LOG_LIST[i])
+        LAST_MODIFICATION_DATE = pd.to_datetime(LAST_MODIFICATION_DATE, unit='s')
+        LAST_MODIFICATION_DATE = LAST_MODIFICATION_DATE.strftime('%Y-%m-%d %H:%M:%S')
 
         for line in log_lines[::-1]:
             if 'ExecutionTime' in line and EXECUTION_TIME is None:
@@ -222,34 +242,42 @@ def read_log_file_solver (FOLDER_PATH, SOLVER_EXTENSIONS):
         L_NUMBER_ITERATIONS[i] = NUMBER_ITERATIONS
         L_SOLVER_NAME[i] = SOLVER_NAME
         L_ITERRATIONS_PER_EXECUTION_TIME[i] = ITERRATIONS_PER_EXECUTION_TIME
+        L_LAST_MODIFICATION_DATE[i] = LAST_MODIFICATION_DATE
 
         log_file.close()
 
-    return L_EXECUTION_TIME, L_NUMBER_ITERATIONS, L_SOLVER_NAME, L_ITERRATIONS_PER_EXECUTION_TIME
+    return L_EXECUTION_TIME, L_NUMBER_ITERATIONS, L_SOLVER_NAME, L_ITERRATIONS_PER_EXECUTION_TIME, L_LAST_MODIFICATION_DATE
             
 
 ####################################################################################################
 
 # write report based on all the information provided
 # returns: standarized table
-def write_report (OPENFOAM_WORKSPACE_DIR, WINDOW_SIZE=50, SOLVER_EXTENSIONS=['rhoCentralFoam', 'rhoPimpleFoam', 'simpleFoam', 'rhoSimpleFoam']):
+def write_report (OPENFOAM_WORKSPACE_DIR, WINDOW_SIZE=50, SOLVER_EXTENSIONS=['rhoCentralFoam', 'rhoPimpleFoam', 'simpleFoam', 'rhoSimpleFoam'], show=False):
 
     file_path = os.path.join(OPENFOAM_WORKSPACE_DIR, 'report.txt')
 
     PLOT_FORCES_PATH    = os.path.join(OPENFOAM_WORKSPACE_DIR, 'forces.svg')
     PLOT_RESIDUALS_PATH = os.path.join(OPENFOAM_WORKSPACE_DIR, 'residuals.svg')
 
+    TOTAL_STATUS_CODE, LOG_LIST, STATUS_CODE = read_log_file(OPENFOAM_WORKSPACE_DIR)
+
+    # if no log files found, return None
+    if TOTAL_STATUS_CODE == 0 and len(LOG_LIST) == 0:
+        print('No log files found')
+        return None
+
     YPLUS_MIN, YPLUS_MAX, YPLUS_AVG = read_yPlus(OPENFOAM_WORKSPACE_DIR + '\\postProcessing\\yPlus1\\0\\yPlus.dat')
     FINAL_COEFFS, FINAL_COEFFS_WINDOW, WINDOW_SIZE = read_forces(OPENFOAM_WORKSPACE_DIR + '\\postProcessing\\forceCoeffs1\\0\\coefficient.dat', WINDOW_SIZE=WINDOW_SIZE, save_plot=PLOT_FORCES_PATH)
     FINAL_RESIDUALS, HEADERS_RESIDUALS = read_residuals(OPENFOAM_WORKSPACE_DIR + '\\postProcessing\\solverInfo1\\0\\solverInfo.dat', save_plot=PLOT_RESIDUALS_PATH)
-    TOTAL_STATUS_CODE, LOG_LIST, STATUS_CODE = read_log_file(OPENFOAM_WORKSPACE_DIR)
-    L_EXECUTION_TIME, L_NUMBER_ITERATIONS, L_SOLVER_NAME, L_ITERRATIONS_PER_EXECUTION_TIME = read_log_file_solver(OPENFOAM_WORKSPACE_DIR, SOLVER_EXTENSIONS=SOLVER_EXTENSIONS)
+    L_EXECUTION_TIME, L_NUMBER_ITERATIONS, L_SOLVER_NAME, L_ITERRATIONS_PER_EXECUTION_TIME, L_LAST_MODIFICATION_DATE = read_log_file_solver(OPENFOAM_WORKSPACE_DIR, SOLVER_EXTENSIONS=SOLVER_EXTENSIONS)
 
     # write report
 
     # write header
     report_file = open(file_path, 'w')
     report_file.write('Report\n')
+    report_file.write('case: {}\n'.format(OPENFOAM_WORKSPACE_DIR))
     report_file.write('------\n')
     report_file.write('\n')
 
@@ -274,11 +302,17 @@ def write_report (OPENFOAM_WORKSPACE_DIR, WINDOW_SIZE=50, SOLVER_EXTENSIONS=['rh
     report_file.write('\n')
 
     # write residuals
-    report_file.write('Final Residuals\n')
-    report_file.write('---------\n')
-    for i in range(len(FINAL_RESIDUALS)):
-        report_file.write(f'{HEADERS_RESIDUALS[i]}:\t {FINAL_RESIDUALS[i]}\n')
-    report_file.write('\n')
+    if FINAL_RESIDUALS is None:
+        report_file.write('Residuals\n')
+        report_file.write('---------\n')
+        report_file.write('No residuals found\n')
+        report_file.write('\n')
+    else:
+        report_file.write('Final Residuals\n')
+        report_file.write('---------\n')
+        for i in range(len(FINAL_RESIDUALS)):
+            report_file.write(f'{HEADERS_RESIDUALS[i]}:\t {FINAL_RESIDUALS[i]}\n')
+        report_file.write('\n')
 
     # write log files
     report_file.write('Log Files\n')
@@ -295,11 +329,43 @@ def write_report (OPENFOAM_WORKSPACE_DIR, WINDOW_SIZE=50, SOLVER_EXTENSIONS=['rh
     report_file.write(f'number iterations: {L_NUMBER_ITERATIONS}\n')
     report_file.write(f'solver name: {L_SOLVER_NAME}\n')
     report_file.write(f'iterations per execution time: {L_ITERRATIONS_PER_EXECUTION_TIME}\n')
+    report_file.write(f'last modification date: {L_LAST_MODIFICATION_DATE}\n')
     report_file.write('\n')
 
     report_file.close()
 
-    return
+    # print contain report in cmd
+    if show:
+        report_file = open(file_path, 'r')
+        print(report_file.read())
+        report_file.close()
+
+    # save all variable in function to file that can be loaded to python easylly
+    # save all variables in a dictionary
+
+    # save dictionary to file
+    DICT = {}
+    DICT['OPENFOAM_WORKSPACE_DIR'] = OPENFOAM_WORKSPACE_DIR
+    DICT['YPLUS_MIN'] = YPLUS_MIN
+    DICT['YPLUS_MAX'] = YPLUS_MAX
+    DICT['YPLUS_AVG'] = YPLUS_AVG
+    DICT['FINAL_COEFFS'] = FINAL_COEFFS
+    DICT['FINAL_COEFFS_WINDOW'] = FINAL_COEFFS_WINDOW
+    DICT['WINDOW_SIZE'] = WINDOW_SIZE
+    DICT['FINAL_RESIDUALS'] = FINAL_RESIDUALS
+    DICT['HEADERS_RESIDUALS'] = HEADERS_RESIDUALS
+    DICT['TOTAL_STATUS_CODE'] = TOTAL_STATUS_CODE
+    DICT['LOG_LIST'] = LOG_LIST
+    DICT['STATUS_CODE'] = STATUS_CODE
+    DICT['L_EXECUTION_TIME'] = L_EXECUTION_TIME
+    DICT['L_NUMBER_ITERATIONS'] = L_NUMBER_ITERATIONS
+    DICT['L_SOLVER_NAME'] = L_SOLVER_NAME
+    DICT['L_ITERRATIONS_PER_EXECUTION_TIME'] = L_ITERRATIONS_PER_EXECUTION_TIME
+    DICT['L_LAST_MODIFICATION_DATE'] = L_LAST_MODIFICATION_DATE
+
+    np.save(os.path.join(OPENFOAM_WORKSPACE_DIR, 'report.npy'), DICT)
+
+    return DICT
 
 
 if __name__ == "__main__":
