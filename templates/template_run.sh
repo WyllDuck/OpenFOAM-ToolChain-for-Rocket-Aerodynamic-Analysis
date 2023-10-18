@@ -8,10 +8,30 @@ echo "Configuration File: " $CONFIG
 echo "Project Template Folder: " $PROJECT_FOLDER
 echo "Project Output Folder: " $OUTPUT_PROJECT_FOLDER
 
+# if OUTPUT_PROJECT_FOLDER does already exist stop
+if [ -d "$OUTPUT_PROJECT_FOLDER" ]; then
+    echo "Error: Project Output Folder already exists!"
+    echo ""
+    exit 1
+fi
+
 # copy template in 'run' folder and change directory
+# if PROJECT_FOLDER does not exist stop
+if [ ! -d "$PROJECT_FOLDER" ]; then
+    echo "Error: Project Template Folder does not exist!"
+    echo ""
+    exit 1
+fi
+
 cp -r $PROJECT_FOLDER $OUTPUT_PROJECT_FOLDER
 
 # replace default configuration file in template repository with the used configuration file
+# if CONFIG does not exist stop
+if [ ! -f "$CONFIG" ]; then
+    echo "Error: Configuration File does not exist!"
+    echo ""
+    exit 1
+fi
 cp $CONFIG $OUTPUT_PROJECT_FOLDER/config.json
 
 # find all 'jinja' templates and set fixed values from the configuration file 
