@@ -15,7 +15,7 @@ surfaces1
     writeInterval   -1;
 
     surfaceFormat   vtk;
-    fields          (p U T rho Ma);
+    fields          (p U T rho Ma wallShearStress yPlus);
 
     // interpolationScheme cellPoint;  //<- default
 
@@ -25,6 +25,14 @@ surfaces1
         {
             type            patch;
             patches         ("symmetryPatch");
+            interpolate     false;
+            invariant       true;  // Unaffected by mesh motion
+        }
+         
+        rocketSkin
+        {
+            type            patch;
+            patches         ("wallPatch");
             interpolate     false;
             invariant       true;  // Unaffected by mesh motion
         }

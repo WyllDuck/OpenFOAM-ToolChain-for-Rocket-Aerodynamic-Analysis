@@ -61,7 +61,6 @@ functions
     #include "FOs/FOforceCoeffs"
 
     #include "FOs/FOyPlus"
-    #include "FOs/FOCourantNo"
     #include "FOs/FOMach"
     #include "FOs/FOwallShearStress"
 

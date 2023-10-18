@@ -29,11 +29,21 @@ boundaryField
         value           $internalField;
     }
 
+    {% if wallModelk %}
+    // Wall function for k 
     wallPatch
     {
         type            kLowReWallFunction;
         value           $internalField;
     }
+    {% else %}
+    // Fixed value for k
+    wallPatch
+    {
+        type            fixedValue;
+        value           uniform 1e-20;
+    }
+    {% endif %}
 
     symmetryPatch
     {
