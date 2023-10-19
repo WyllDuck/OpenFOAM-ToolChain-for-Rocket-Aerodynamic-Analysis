@@ -1,5 +1,6 @@
 import os, sys
 import pandas as pd
+import shutil
 from genReport import write_report
 from VTKtoIMAGE import default1
 
@@ -17,7 +18,7 @@ def get_subfolders(paths):
     return subfolders
 
 
-def execute_functions(path, generate_images=True):
+def execute_functions(path, generate_images=True, copy_path=None):
     """
     Given a list of paths, executes the genReport and VTKtoIMAGE functions on each subfolder.
     """
@@ -28,35 +29,107 @@ def execute_functions(path, generate_images=True):
 
     window_size = 50
     solver_extensions = ['rhoCentralFoam', 'rhoPimpleFoam', 'simpleFoam', 'rhoSimpleFoam']
-    REPORT = write_report(path, WINDOW_SIZE=window_size, SOLVER_EXTENSIONS=solver_extensions, show=True)
+    REPORT = write_report(path, WINDOW_SIZE=window_size, SOLVER_EXTENSIONS=solver_extensions, show=False)
     
     # if the report is empty because no execution was found, return
-    if REPORT is None or generate_images is False:
+    if REPORT is None:
         return REPORT
 
-    surface_path = os.path.join(path, 'postProcessing', 'surfaces1')
-    max_subfolder_num = 0.0
-    max_subfolder_str = ''
+    if generate_images:
+        surface_path = os.path.join(path, 'postProcessing', 'surfaces1')
+        max_subfolder_num = 0.0
+        max_subfolder_str = ''
 
-    # loop through all the subfolders in the path and select the one with the highest number use os    
-    for subfolder in os.listdir(surface_path):
-        try:
-            if float(subfolder) > max_subfolder_num:
-                max_subfolder_num = float(subfolder)
-                max_subfolder_str = subfolder
-        except ValueError:
-            pass
-    surface_path = os.path.join(surface_path, max_subfolder_str, 'planeXZ.vtp')
+        # loop through all the subfolders in the path and select the one with the highest number use os    
+        for subfolder in os.listdir(surface_path):
+            try:
+                if float(subfolder) > max_subfolder_num:
+                    max_subfolder_num = float(subfolder)
+                    max_subfolder_str = subfolder
+            except ValueError:
+                pass
+        surface_path = os.path.join(surface_path, max_subfolder_str, 'planeXZ.vtp')
 
-    # create folder to save the images
-    save_path = os.path.join(path, 'images')
-    if not os.path.exists(save_path):
-        os.mkdir(save_path)
+        # create folder to save the images
+        save_path = os.path.join(path, 'images')
+        if not os.path.exists(save_path):
+            os.mkdir(save_path)
 
-    # run the default1 function to generate the images
-    default1(surface_path, save_path=save_path)
+        # run the default1 function to generate the images
+        default1(surface_path, save_path=save_path)
+
+    if copy_path is not None:
+        copy_files(path, copy_path)
 
     return REPORT
+
+
+# function that copies file to new folder when provided with workspace_path and copy_path
+def copy_files(workspace_path, copy_path):
+    """
+    Given a list of paths, executes the genReport and VTKtoIMAGE functions on each subfolder.
+    """
+
+    print("=====================================================================================================")
+    print("\n\n")
+    print("Copying file from {} to {}".format(workspace_path, copy_path))
+
+    # check if the copy_path exists
+    if not os.path.exists(copy_path):
+        print("Info: copy_path does not exist")
+        os.mkdir(copy_path) # create the copy_path
+    
+    # check if the workspace_path exists
+    if not os.path.exists(workspace_path):
+        print("Error: workspace_path does not exist")
+        return
+
+    # origin path
+    ori_path    = os.path.join(workspace_path, 'images')
+    base_name   = os.path.basename(workspace_path)
+    copy_path   = os.path.join(copy_path, base_name)
+
+    # check if destination path exists and ask if it should be overwritten
+    if os.path.exists(copy_path):
+        print("Warning: the path '{}' already exists".format(copy_path))
+        print("Do you want to overwrite it? (y/n)")
+        confirmation = input()
+        if confirmation != 'y':
+            return
+        else:
+            shutil.rmtree(copy_path)
+
+    # add images to the copy_path
+    if os.path.exists(ori_path):
+        shutil.copytree(ori_path, copy_path)
+    else:
+        print("Warning: images folder does not exist")
+        os.mkdir(copy_path)
+
+    # add residuals and forces to the copy_path
+    ori_path    = os.path.join(workspace_path, 'residuals.png')
+    if os.path.exists(ori_path):
+        shutil.copy(ori_path, copy_path)
+    else:
+        print("Warning: residuals.png does not exist")
+    
+    ori_path    = os.path.join(workspace_path, 'forces.png')
+    if os.path.exists(ori_path):
+        shutil.copy(ori_path, copy_path)
+    else:
+        print("Warning: forces.png does not exist")
+
+    # add the report.txt to the copy_path
+    ori_path    = os.path.join(workspace_path, 'report.txt')
+    if os.path.exists(ori_path):
+        shutil.copy(ori_path, copy_path)
+    else:
+        print("Warning: report.txt does not exist")
+
+    print("File copied successfully")
+    print()
+
+    return
 
 
 # class holding all reports
@@ -177,6 +250,9 @@ class ReportContainer(object):
 # read the paths as args
 def main ():
 
+    # get execution location in cmd
+    WORK_DIR = os.getcwd()
+
     # instantiate the report container
     REPORTS = ReportContainer()
     
@@ -207,13 +283,10 @@ def main ():
     
     # execute the functions
     for path in EXECUTION_FOLDERS:
-        REPORT = execute_functions(path, generate_images=generate_images)
+        REPORT = execute_functions(path, generate_images=generate_images, copy_path=os.path.join(WORK_DIR, 'reports'))
         if REPORT is not None:
             REPORTS.add(REPORT)
 
-
-    # get execution location in cmd
-    WORK_DIR = os.getcwd()
     print("=====================================================================================================")
     print("=====================================================================================================")
 

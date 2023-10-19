@@ -104,6 +104,8 @@ def plot_residuals (_residuals, _headers, save_path=None):
     else:
         plt.show()
 
+    plt.close()
+
     return
 
 # plot forces
@@ -121,6 +123,8 @@ def plot_forces (_forces, _headers, save_path=None):
         plt.savefig(save_path)
     else:
         plt.show()
+
+    plt.close()
 
     return
 
@@ -255,8 +259,8 @@ def write_report (OPENFOAM_WORKSPACE_DIR, WINDOW_SIZE=50, SOLVER_EXTENSIONS=['rh
 
     file_path = os.path.join(OPENFOAM_WORKSPACE_DIR, 'report.txt')
 
-    PLOT_FORCES_PATH    = os.path.join(OPENFOAM_WORKSPACE_DIR, 'forces.svg')
-    PLOT_RESIDUALS_PATH = os.path.join(OPENFOAM_WORKSPACE_DIR, 'residuals.svg')
+    PLOT_FORCES_PATH    = os.path.join(OPENFOAM_WORKSPACE_DIR, 'forces.png')
+    PLOT_RESIDUALS_PATH = os.path.join(OPENFOAM_WORKSPACE_DIR, 'residuals.png')
 
     TOTAL_STATUS_CODE, LOG_LIST, STATUS_CODE = read_log_file(OPENFOAM_WORKSPACE_DIR)
 
