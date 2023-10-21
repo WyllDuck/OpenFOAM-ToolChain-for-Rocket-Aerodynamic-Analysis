@@ -18,9 +18,9 @@ solvers
 {
     p
     {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-15;
+        solver          GAMG;
+        smoother        GaussSeidel;
+        tolerance       1e-14;
         relTol          0.01;
         minIter         1;
     }
@@ -28,14 +28,13 @@ solvers
     pFinal
     {
         $p;
-        tolerance       1e-15;
-        relTol          0.1;
+        relTol          0.0;
     }
 
     "(rho|U|e|k|omega)"
     {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
+        solver          PBiCGStab;
+        preconditioner  DILU;
         tolerance       1e-14;
         relTol          0.01;
         minIter         1;
@@ -44,8 +43,7 @@ solvers
     "(rho|U|e|k|omega)Final"
     {
         $U;
-        tolerance       1e-14;
-        relTol          0.1;
+        relTol          0.0;
     }
 }
 
@@ -59,14 +57,28 @@ PIMPLE
     // NOTE: transonic activated at 0.5 Mach frestream, recomendation
     transonic       yes;    // Transonic flow ON
 
-    pMinFactor      0.02;
-    pMaxFactor      4;
+    pMinFactor      0.01;
+    pMaxFactor      100;
 
     // NOTE: Can be defined in the controlDict file
     // maxCo                   {{ maxCo }};
     // rDeltaTSmoothingCoeff   0.1;
     // rDeltaTDampingCoeff     1;
     // maxDeltaT               1;
+}
+
+relaxationFactors
+{
+    fields
+    {
+        p       0.6;
+        pFinal  1.0;
+    }
+    
+    equations
+    {
+        ".*"    0.8;
+    }
 }
 
 // ************************************************************************* //
