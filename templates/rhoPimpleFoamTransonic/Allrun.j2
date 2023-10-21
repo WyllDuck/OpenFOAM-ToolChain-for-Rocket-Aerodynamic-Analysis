@@ -12,15 +12,10 @@ cp $MESH_DIR/../../system/meshDict system/meshDict
 touch case.foam
 
 restore0Dir
-
-{% if map_file != "none" %}
-{{ "# runApplication mapFields $MAP_DIR -sourceTime latestTime -mapMethod mapNearest" }}
-{% endif %}
-
 runApplication decomposePar
 
 {% if map_file != "none" %}
-{{ "runParallel mapFieldsPar $MAP_DIR -sourceTime latestTime -consistent -fields '(U p T)'" }}
+{{ "runParallel mapFieldsPar $MAP_DIR -sourceTime latestTime -consistent -fields '(U p T omega k alphat nut)'" }}
 {% endif %}
 
 runParallel -append "$(getApplication)"
