@@ -39,6 +39,14 @@ if [ ! -f "$CONFIG" ]; then
     exit 1
 fi
 
+# try to jinja2 - if fail stop
+if ! command -v jinja2 &> /dev/null
+then
+    echo "Error: jinja2 could not be found!"
+    echo ""
+    exit 1
+fi
+
 cp -r $PROJECT_FOLDER $OUTPUT_PROJECT_FOLDER
 cp $CONFIG $OUTPUT_PROJECT_FOLDER/config.json
 
