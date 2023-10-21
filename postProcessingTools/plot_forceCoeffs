@@ -1,14 +1,33 @@
-set title "Force Coefficients"
-set ylabel "Force Coefficients"
-set xlabel "nº of iteration (or time [sec])"
+set title "Force Coefficients (Cd, Cl, CmPitch)"
 
 set grid
 set key top left autotitle columnhead
 set datafile commentschar '#'
 
-plot 	"tables/forceCoeffs_plot.dat" using "Time":"Cd" title 'Cd' with lines,\
- 		"tables/forceCoeffs_plot.dat" using "Time":"CmPitch" title 'CmPitch' with lines,\
-		"tables/forceCoeffs_plot.dat" using "Time":"Cl" title 'Cl' with lines
+set multiplot layout 3,2        # engage multiplot mode
+
+unset xlabel
+unset title
+plot 	"tables/forceCoeffs_plot.dat" using "Time":"Cd" title 'Cd' with lines
+
+unset xlabel
+unset title
+plot    "< tail -n 100 tables/forceCoeffs_plot.dat" using 1:2 with lines title 'Cd'
+
+unset xlabel
+unset title
+plot	"tables/forceCoeffs_plot.dat" using "Time":"CmPitch" title 'CmPitch' with lines
+
+unset xlabel
+unset title
+plot    "< tail -n 100 tables/forceCoeffs_plot.dat" using 1:8 with lines title 'CmPitch'
+
+set xlabel "nº of iterations"
+plot	"tables/forceCoeffs_plot.dat" using "Time":"Cl" title 'Cl' with lines
+
+set xlabel "nº of iterations"
+plot    "< tail -n 100 tables/forceCoeffs_plot.dat" using 1:5 with lines title 'Cl'
+
 pause 10
 reread
 
