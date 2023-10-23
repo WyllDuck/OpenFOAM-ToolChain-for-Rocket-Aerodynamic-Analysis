@@ -16,11 +16,12 @@ FoamFile
 
 solvers
 {
+    // OPTION 1
     p
     {
-        solver          GAMG;
-        smoother        GaussSeidel;
-        tolerance       1e-14;
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-15;
         relTol          0.01;
         minIter         1;
     }
@@ -28,10 +29,26 @@ solvers
     pFinal
     {
         $p;
-        relTol          0.0;
+        relTol          0.1;
     }
 
-    "(rho|U|e|k|omega)"
+    // OPTION 2
+    // p
+    // {
+    //     solver          GAMG;
+    //     smoother        GaussSeidel;
+    //     tolerance       1e-14;
+    //     relTol          0.01;
+    //     minIter         1;
+    // }
+
+    // pFinal
+    // {
+    //     $p;
+    //     relTol          0.0;
+    // }
+
+    "(rho|U|e)"
     {
         solver          PBiCGStab;
         preconditioner  DILU;
@@ -40,10 +57,25 @@ solvers
         minIter         1;
     }
 
-    "(rho|U|e|k|omega)Final"
+    "(rho|U|e)Final"
     {
         $U;
-        relTol          0.0;
+        relTol          0.1;
+    }
+
+    "(k|omega)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-14;
+        relTol          0.01;
+        minIter         1;
+    }
+
+    "(k|omega)Final"
+    {
+        $k;
+        relTol          0.1;
     }
 }
 
@@ -57,8 +89,8 @@ PIMPLE
     // NOTE: transonic activated at 0.5 Mach frestream, recomendation
     transonic       yes;    // Transonic flow ON
 
-    pMinFactor      0.01;
-    pMaxFactor      100;
+    pMinFactor      0.02;
+    pMaxFactor      4;
 
     // NOTE: Can be defined in the controlDict file
     // maxCo                   {{ maxCo }};
@@ -67,18 +99,19 @@ PIMPLE
     // maxDeltaT               1;
 }
 
-relaxationFactors
-{
-    fields
-    {
-        p       0.6;
-        pFinal  1.0;
-    }
-    
-    equations
-    {
-        ".*"    0.8;
-    }
-}
+// OPTION 2
+// relaxationFactors
+// {
+//     fields
+//     {
+//         p       0.6;
+//         pFinal  1.0;
+//     }
+
+//     equations
+//     {
+//         ".*"    0.8;
+//     }
+// }
 
 // ************************************************************************* //
