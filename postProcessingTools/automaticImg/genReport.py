@@ -112,13 +112,31 @@ def plot_residuals (_residuals, _headers, save_path=None):
 # returns: None
 def plot_forces (_forces, _headers, save_path=None):
 
-    # plot forces
-    plt.figure(figsize=(10, 5))
-    plt.plot(_forces)
-    plt.ylabel('Force')
-    plt.xlabel('Iteration')
-    plt.legend(_headers)
+    # plot forces on a 3 by 2 multiple plot figure
+    # Cd, Cl, Cm in the row figure configuration and the column figure configuration is all the data on the left side and on the right side only the last 100 iterations
+    fig, axs = plt.subplots(3, 2, figsize=(10, 5))
+    fig.suptitle('Forces')
 
+    # plot all data
+    for i in range(3):
+        axs[i, 0].plot(_forces[:, i])
+        axs[i, 0].set_ylabel(_headers[i])
+        axs[i, 0].set_xlabel('Iteration')
+        axs[i, 0].grid(True)
+
+    # plot last 100 iterations
+    for i in range(3):
+        axs[i, 1].plot(_forces[-100:, i])
+        axs[i, 1].set_ylabel(_headers[i])
+        axs[i, 1].set_xlabel('Iteration')
+        axs[i, 1].grid(True)
+
+    # add legend to all plots
+    # location of legend upper right corner
+    for i in range(3):
+        axs[i, 0].legend([_headers[i]], loc='upper right')
+        axs[i, 1].legend(['{} - last 100'.format(_headers[i])], loc='upper right')
+    
     if save_path is not None:
         plt.savefig(save_path)
     else:
