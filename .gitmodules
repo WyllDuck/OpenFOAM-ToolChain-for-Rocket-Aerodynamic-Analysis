@@ -1,0 +1,3 @@
+[submodule "OpenFOAM-ToolChain-helperFunctions"]
+	path = OpenFOAM-ToolChain-helperFunctions
+	url = git@github.com:WyllDuck/OpenFOAM-ToolChain-helperFunctions.git
