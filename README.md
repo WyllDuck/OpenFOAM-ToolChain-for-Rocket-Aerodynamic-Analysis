@@ -63,5 +63,12 @@ Additional folders contained in the repository are extra resources that might co
 
 What follows is a diagram found in the report (see link to file above) that shows how to feed a configuration file (_JSON_ file) to a template to obtain a configured OpenFOAM simulation workspace. In the second stage, the diagram explains how to automatically execute the list of OpenFOAM workspaces by providing an ordering list and the workspaces.  
 
+> [!IMPORTANT]  
+> The __run__ folder is automatically generated as the storage location if non-existent when the automatic execution of simulation stars. On the same note, the __todo__ folder is automatically generated if non-existent when OpenFOAM workspaces are created as their storage location.
+
+> [!IMPORTANT]
+> Also, the configuration files are generated using Python scripts in the submodule folder _OpenFOAM-ToolChain-helperFunctions_ (https://github.com/WyllDuck/OpenFOAM-ToolChain-helperFunctions), please visit that repository for further information. 
+
+![SVG Image](workflow.svg)
 
 
