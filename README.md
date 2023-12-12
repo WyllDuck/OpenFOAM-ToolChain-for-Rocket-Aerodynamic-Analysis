@@ -143,8 +143,8 @@ cd postProcessingTools
 ```
 
 <p float="left">
-  <img src="residuals_central.svg" alt="Image 1" width="250" />
-  <img src="coeffs_central.svg" alt="Image 2" width="350" />
+  <img src="residuals_central.svg" alt="Image 1" width="350" />
+  <img src="coeffs_central.svg" alt="Image 2" width="450" />
 </p>
 
 __OPTIONAL - AFTER COMPUTATIONS DONE__
