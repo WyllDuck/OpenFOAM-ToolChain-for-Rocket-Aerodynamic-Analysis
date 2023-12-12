@@ -3,6 +3,24 @@ __by Félix Martí Valverde__
 
 This project provides a complete toolchain for evaluating different rocket geometries and subsonic, transonic, and supersonic regimes. The work contained in this repository is part of a student project carried out at the _Technical University of Munich_ (TUM) under the _Master of Science (M.Sc) in Aerospace_ (year 2023) which aims to provide a standalone and verified methodology to extract aerodynamic characteristics of a rocket using 3D CFD simulation with pressure and density based solvers found in OpenFOAM (ESI group distribution). 
 
+![PNG Image](results.png)
+
+## HIGHLIGHTS
+
+<ul>
+  <li>🚀Generation of specific OpenFOAM workspace using templates and <i>JSON</i> configuration files. Powered by <i>Jinja2</i>, a Python module.🚀</li>
+
+  <li>📂Structured Layout for automatic generation of large aerodynamic databases.📂</li>
+
+  <li>🤖Automatic generation of CFD reports with the generation of predefined images through Paraviews Python API.🤖</li>
+
+  <li>⚙️Planned execution in series of multiple OpenFOAM simultations⚙️</li>
+
+  <li>🐋Use of containers to speed up deployment of CFD server🐳 (5%⬇️ drop in efficiency)</li>
+
+  <li>🤓Examples of OpenFOAM workspaces using <i>rhoPimpleFOAM</i> and <i>rhoCentralFoam</i> at subsonic, transonic, and supersonic regimes.🤓</li>
+</ul>
+
 ## INTRODUCTION
 
 Computational Fluid Dynamics (CFD) tools from providers like ANSYS (Fluent) or Siemens (Star-CCM+) can be a financial burden on small businesses and startups alike. Thus, open-source alternatives like OpenFOAM are becoming increasingly appealing to reduce development costs. However, OpenFOAM has largely remained a research tool reserved for academia due to its lack of documentation, the high level of expertise required, and a lack of standardization and Graphical User Interface (GUI). This project identifies these shortcomings and aims to streamline the process, which is generally reserved for academia, thus easing the commercial adoption of this tool. 
@@ -29,7 +47,7 @@ Necessary Python modules for the execution of the pipeline are _jinja2-cli_ whic
 ```python3 -m pip install jinja2-cli```
 
 __OPTIONAL__
-Other additional python modules need to be installed to test solvers of structured meshes (see folder _sphereMesh_) which contains a Python file named _sphere.py_ using python module _classyblocks_ (https://github.com/damogranlabs/classy_blocks)
+Other additional Python modules need to be installed to test solvers of structured meshes (see folder _sphereMesh_) which contains a Python file named _sphere.py_ using python module _classyblocks_ (https://github.com/damogranlabs/classy_blocks)
 
 ```python3 -m pip install classy-blocks```
 
@@ -42,7 +60,7 @@ Additional Tools that may interest the user to interact with the server and writ
 
 Also, the project explores different alternatives to execute OpenFOAM on personal computers that might run Windows exclusively. In the report, performance drops when using containers (with Docker) or the Windows Subsystem for Linux (WSL) can be found, find a link to the file in the Introduction.
 
-# EXECUTION
+## CONTENT
 
 The repository contains 3 fundamental folders: _rocketMesh_, _templates_, and _postProcessingTools_
 
@@ -60,6 +78,8 @@ The repository contains 3 fundamental folders: _rocketMesh_, _templates_, and _p
 </ul>
 
 Additional folders contained in the repository are extra resources that might come in handy. The submodule folder _OpenFOAM-ToolChain-helperFunctions_ (https://github.com/WyllDuck/OpenFOAM-ToolChain-helperFunctions) contains all the Python scripts used to calculate atmospheric conditions for each simulated case and extract the wind tunnel data to compare CFD results to. 
+
+## EXECUTION
 
 What follows is a diagram found in the report (see link to file above) that shows how to feed a configuration file (_JSON_ file) to a template to obtain a configured OpenFOAM simulation workspace. In the second stage, the diagram explains how to automatically execute the list of OpenFOAM workspaces by providing an ordering list and the workspaces.  
 
