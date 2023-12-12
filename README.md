@@ -143,8 +143,8 @@ cd postProcessingTools
 ```
 
 <p float="left">
-  <img src="residuals_central.svg" alt="Image 1" width="450" />
-  <img src="coeffs_central.svg" alt="Image 2" width="550" />
+  <img src="residuals_central.svg" alt="Image 1" width="250" />
+  <img src="coeffs_central.svg" alt="Image 2" width="350" />
 </p>
 
 __OPTIONAL - AFTER COMPUTATIONS DONE__
@@ -158,7 +158,7 @@ python3 genAllTable.py run #FOLDER1 FOLDER2 FOLDER3 ...
 The Python script takes as arguments a list of path directories containing OpenFOAM workspaces, in this example, the OpenFOAM workspace _rhoCentralFoamExample_ is stored in the _run_ folder and no other location contains more OpenFOAM workspaces.
 
 > [!IMPORTANT]
-> This command will only generate images if the Python instruction _from paraview.simple import *_ if successfull. This requires a correct installation of Paraview which might be difficult depending on the user's knowledge.  
+> This command will only generate images if the Python instruction _"from paraview.simple import *"_ if successfull. This requires a correct installation of Paraview which might be difficult depending on the user's knowledge. A solution is proposed in document _postProcessingTools/automaticImg/VTKtoIMAGE.py_.
 
 ### HOW TO ADD CONFIGURABLE PARAMETERS TO THE TEMPLATES
 
