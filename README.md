@@ -47,6 +47,7 @@ Necessary Python modules for the execution of the pipeline are _jinja2-cli_ whic
 ```python3 -m pip install jinja2-cli```
 
 __OPTIONAL__
+
 Other additional Python modules need to be installed to test solvers of structured meshes (see folder _sphereMesh_) which contains a Python file named _sphere.py_ using python module _classyblocks_ (https://github.com/damogranlabs/classy_blocks)
 
 ```python3 -m pip install classy-blocks```
@@ -91,4 +92,66 @@ What follows is a diagram found in the report (see link to file above) that show
 
 ![SVG Image](workflow.svg)
 
+> [!NOTE]
+> For an easy and reliable setup of OpenFOAM in any local machine it is recommended to use 🐋Docker. For more information on how to use docker in combination with OpenFOAM go to https://github.com/jakobhaervig/openfoam-dockerfiles. The recommended docker file containing extra modules required to run this toolchain can be in the repository's main folder.  
 
+### EXAMPLE
+
+To execute a single example CFD simulation using the toolchain in this repository follow these instructions:
+
+1. Create the specific OpenFOAM file using the templating software. Note that, you <b>must</b> navigate to the <b>templates</b> folder and generate the <b>todo</b> folder, or any other save location for the generated OpenFOAM workspaces.
+
+```bash
+cd templates
+mkdir -p ../todo
+./template_run.sh config.json rhoCentralFoam ../todo/rhoCentralFoamExample
+```
+
+The <b>template_run.sh</b> takes 3 parameters. First the *global address* to the <i>JSON</i> configuration file, then the *global address* to the template file (all templating options should be stored in the <i>templates</i> folder), and finally the *global address* where the generated OpenFOAM workspace will be stored. 
+
+> [!IMPORTANT]
+> Modify the following parameters in the _JSON_ configuration file to tailor the OpenFOAM workspace to your specific machine and paths. 
+
+2. Go to the _rocketMesh_ folder to generate the mesh that you will be using in this simulation.
+
+```bash
+cd ../rocketMesh/rocketShort/noFinSupport/R1
+./Allclean
+./Allrun
+```
+
+It is recommended to first clean the workspace to make sure that no residual files remain in the project.
+
+3. Navigate to the main folder and run the OpenFOAM workspace generated in 1. and stored in the <i>todo</i> folder.
+
+```bash
+cd ../../../..
+./run.sh input.txt rhoCentralFoamExample
+```
+
+The _run.sh_ script takes 2 arguments. A list setting the order of execution of the simulations and the first element on the list that you want to execute. 
+
+__OPTIONAL - MONITORING PLOTS__
+
+4. Monitoring residuals and aerodynamic coefficients of the CFD simulation being executed. You must use a new terminal since the previous terminal is occupied computing the CFD solutions.
+
+```bash
+cd postProcessingTools
+./plot_forceCoeffs.sh ../run/rhoCentralFoamExample/postProcessing/forceCoeffs1/0/coefficient.dat
+
+./plot_residuals.sh ../run/rhoCentralFoamExample/postProcessing/solverInfo1/0/solverInfo.dat
+```
+
+__OPTIONAL - AFTER COMPUTATIONS DONE__
+
+6. Generated a report and predefined images for all simulations located in the _run_ folder, and _CSV_ file containing all relevant metrics of all simulations in the _run_ folder. Note that in the current example only one simulation, _rhoCentralFoamExample_ should be in the _run_ folder. 
+
+```bash
+python3 genAllTable.py run #FOLDER1 FOLDER2 FOLDER3 ...
+```
+The Python script takes as arguments a list of path directories containing OpenFOAM workspaces, in this example, the OpenFOAM workspace _rhoCentralFoamExample_ is stored in the _run_ folder and no other location contains more OpenFOAM workspaces.
+
+> [!IMPORTANT]
+> This command will only generate images if the Python instruction _from paraview.simple import *_ if successfull. This requires a correct installation of Paraview which might be difficult depending on the user's knowledge.  
+
+### HOW TO ADD CONFIGURABLE PARAMETERS TO THE TEMPLATES
