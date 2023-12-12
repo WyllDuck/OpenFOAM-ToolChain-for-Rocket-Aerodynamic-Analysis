@@ -142,6 +142,11 @@ cd postProcessingTools
 ./plot_residuals.sh ../run/rhoCentralFoamExample/postProcessing/solverInfo1/0/solverInfo.dat
 ```
 
+<p float="left">
+  <img src="residuals_central.svg" alt="Image 1" width="450" />
+  <img src="coeffs_central.svg" alt="Image 2" width="550" />
+</p>
+
 __OPTIONAL - AFTER COMPUTATIONS DONE__
 
 6. Generated a report and predefined images for all simulations located in the _run_ folder, and _CSV_ file containing all relevant metrics of all simulations in the _run_ folder. Note that in the current example only one simulation, _rhoCentralFoamExample_ should be in the _run_ folder. 
@@ -149,9 +154,24 @@ __OPTIONAL - AFTER COMPUTATIONS DONE__
 ```bash
 python3 genAllTable.py run #FOLDER1 FOLDER2 FOLDER3 ...
 ```
+
 The Python script takes as arguments a list of path directories containing OpenFOAM workspaces, in this example, the OpenFOAM workspace _rhoCentralFoamExample_ is stored in the _run_ folder and no other location contains more OpenFOAM workspaces.
 
 > [!IMPORTANT]
 > This command will only generate images if the Python instruction _from paraview.simple import *_ if successfull. This requires a correct installation of Paraview which might be difficult depending on the user's knowledge.  
 
 ### HOW TO ADD CONFIGURABLE PARAMETERS TO THE TEMPLATES
+
+Navigate to the example configuration _JSON_ file located in the main folder. This file must contain all the parameters that the selected template requires. Following the example previously presented you can visit the template _rhoCentralFoam_ and look for files with the extension _.j2_. This extension tells the _template_run.sh_ script that that file contains configurable parameters that must be written using Jinja2. Some of these parameters can be directly copied from the _JSON_ file, while others use Jinja2 logic (for loops, if conditions, etc.) which can be found in https://jinja.palletsprojects.com/en/2.10.x/
+
+To add configurable parameters to a template follow these steps
+
+1. Change the extension of the file to _.j2_. It is recommended to issue git commands when changing the file's name to keep track of past changes.
+
+```bash
+git mv file1 file1.j2
+```
+
+2. Add Jinja2 syntax (https://jinja.palletsprojects.com/en/2.10.x/) to template the file
+3. Add the new parameters to your _JSON_ configuration file. 
+
