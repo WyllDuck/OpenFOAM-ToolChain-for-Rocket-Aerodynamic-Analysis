@@ -1,7 +1,7 @@
 # Automatized & Modular OpenFOAM Workspace to Generate Large Aerodynamic Databases for Subsonic and Supersonic Vehicles 
 __by Félix Martí Valverde__
 
-This project provides a complete toolchain for evaluating different rocket geometries and subsonic, transonic, and supersonic regimes. The work contained in this repository is part of a student project carried out at the _Technical University of Munich_ (TUM) under the _Master of Science (M.Sc) in Aerospace_ (year 2023) which aims to provide a standalone and verified methodology to extract aerodynamic characteristics of a rocket using 3D CFD simulation with pressure and density based solvers found in OpenFOAM (ESI group distribution). 
+This project provides a complete toolchain for evaluating different rocket geometries at subsonic, transonic, and supersonic regimes. The work contained in this repository is part of a student project carried out at the _Technical University of Munich_ (TUM) under the _Master of Science (M.Sc) in Aerospace_ (year 2023) which aims to provide a standalone and verified methodology to extract aerodynamic characteristics of a rocket using 3D CFD simulation with pressure and density based solvers found in OpenFOAM (ESI group distribution). 
 
 ![PNG Image](results.png)
 
@@ -16,7 +16,7 @@ This project provides a complete toolchain for evaluating different rocket geome
 
   <li>⚙️Planned execution in series of multiple OpenFOAM simultations⚙️</li>
 
-  <li>🐋Use of containers to speed up deployment of CFD server🐳 (5%⬇️ drop in efficiency)</li>
+  <li>🐋Use of containers to speed up deployment of a CFD server🐳 (5%⬇️ drop in efficiency)</li>
 
   <li>🤓Examples of OpenFOAM workspaces using <i>rhoPimpleFOAM</i> and <i>rhoCentralFoam</i> at subsonic, transonic, and supersonic regimes.🤓</li>
 </ul>
@@ -25,14 +25,19 @@ This project provides a complete toolchain for evaluating different rocket geome
 
 Computational Fluid Dynamics (CFD) tools from providers like ANSYS (Fluent) or Siemens (Star-CCM+) can be a financial burden on small businesses and startups alike. Thus, open-source alternatives like OpenFOAM are becoming increasingly appealing to reduce development costs. However, OpenFOAM has largely remained a research tool reserved for academia due to its lack of documentation, the high level of expertise required, and a lack of standardization and Graphical User Interface (GUI). This project identifies these shortcomings and aims to streamline the process, which is generally reserved for academia, thus easing the commercial adoption of this tool. 
 
-The entirety of the code has been publicly released in this repository to promote investigation using open-source and free tools. The results obtained during the development phase have been validated against wind tunnel data. The validation methodology can be found in the report "_Toolchain for Aerodynamic Characterization of a Rocket During Ascent using OpenFOAM_" along with the results obtained. Additionally, a set of simulation files for OpenFOAM (ESI group distribution) are also provided to provide a complete overview of the parameters utilized. 
+The entirety of the code has been publicly released in this repository to promote investigation using open-source and free tools. The results obtained during the development phase have been validated against wind tunnel data. The validation methodology can be found in the report "_Toolchain for Aerodynamic Characterization of a Rocket During Ascent using OpenFOAM_" along with the results obtained. Additionally, a set of simulation files for OpenFOAM (ESI group distribution) are also provided below to give a complete overview of the parameters used. 
 
 ### links
 
+SIMULATIONS FILES: https://1drv.ms/f/s!AhNN3_xNz6xdhe1IEGJ-niuFxb3V3g?e=uLhchQ
+
+REPORT: https://1drv.ms/b/s!AhNN3_xNz6xdhex7se7BjiaeyGrojg?e=m3ClFa
+
+CAD FILES: https://1drv.ms/f/s!AhNN3_xNz6xdhK0CDDJZs5zly81P_w?e=NSELu2
 
 ## SETUP
 
-To set up the workspace download OpenFOAM ESI (www.openfoam.com) and the following additional tools which are necessary to run the full toolchain. Note that _SALOME_ is used to generate the surface of the vehicle from an initial _STEP_ file into an _STL_ file. More information on the procedure can be found in the report, and an example of the SALOME file can be found in the _Miscelaneous_ folder link above. 
+To set up the workspace download OpenFOAM ESI (www.openfoam.com) and the following additional tools which are necessary to run the full toolchain. Note that _SALOME_ is used to generate the surface of the vehicle from an initial _STEP_ file into an _STL_ file. More information on the procedure can be found in the report, and an example of the _SALOME_ file can be found in the _CAD FILES_ folder link above (file extension .hdf). 
 
 <ul>
   <li>Paraview</li>
@@ -48,18 +53,18 @@ Necessary Python modules for the execution of the pipeline are _jinja2-cli_ whic
 
 __OPTIONAL__
 
-Other additional Python modules need to be installed to test solvers of structured meshes (see folder _sphereMesh_) which contains a Python file named _sphere.py_ using python module _classyblocks_ (https://github.com/damogranlabs/classy_blocks)
+Other additional Python modules need to be installed to test solvers using structured meshes. In the folder _sphereMesh_ a Python file named _sphere.py_ using python module _classyblocks_ (https://github.com/damogranlabs/classy_blocks) generates a structured mesh around a sphere.
 
 ```python3 -m pip install classy-blocks```
 
-Additional Tools that may interest the user to interact with the server and write the code are: 
+Additional tools that may interest the user to interact with the server and write the code are: 
 <ul>
   <li>MobaXterm</li>
   <li>Visual Studio Code (VSC)</li>
   <li>XLaunch</li>
 </ul>
 
-Also, the project explores different alternatives to execute OpenFOAM on personal computers that might run Windows exclusively. In the report, performance drops when using containers (with Docker) or the Windows Subsystem for Linux (WSL) can be found, find a link to the file in the Introduction.
+Also, the project explores different alternatives to execute OpenFOAM on personal computers that might run Windows exclusively. In the report, performance analysis reveals drops in performance due to the use of containers (with Docker) or the Windows Subsystem for Linux (WSL).
 
 ## CONTENT
 
@@ -85,15 +90,15 @@ Additional folders contained in the repository are extra resources that might co
 What follows is a diagram found in the report (see link to file above) that shows how to feed a configuration file (_JSON_ file) to a template to obtain a configured OpenFOAM simulation workspace. In the second stage, the diagram explains how to automatically execute the list of OpenFOAM workspaces by providing an ordering list and the workspaces.  
 
 > [!IMPORTANT]  
-> The __run__ folder is automatically generated as the storage location if non-existent when the automatic execution of simulation stars. On the same note, the __todo__ folder is automatically generated if non-existent when OpenFOAM workspaces are created as their storage location.
+> The __run__ folder is automatically generated as the storage location if non-existent when the automatic execution of simulation starts. On the same note, the __todo__ folder is automatically generated if non-existent when OpenFOAM workspaces are created as their storage location.
 
 > [!IMPORTANT]
-> Also, the configuration files are generated using Python scripts in the submodule folder _OpenFOAM-ToolChain-helperFunctions_ (https://github.com/WyllDuck/OpenFOAM-ToolChain-helperFunctions), please visit that repository for further information. 
+> Also, the configuration files used to template the OpenFOAM workspace are generated using a Python script. This script can be found in the submodule folder _OpenFOAM-ToolChain-helperFunctions_ (https://github.com/WyllDuck/OpenFOAM-ToolChain-helperFunctions), please visit that repository for further information. 
 
 ![SVG Image](workflow.svg)
 
 > [!NOTE]
-> For an easy and reliable setup of OpenFOAM in any local machine it is recommended to use 🐋Docker. For more information on how to use docker in combination with OpenFOAM go to https://github.com/jakobhaervig/openfoam-dockerfiles. The recommended docker file containing extra modules required to run this toolchain can be in the repository's main folder.  
+> For an easy and reliable setup of OpenFOAM in any local machine it is recommended to use 🐋Docker. For more information on how to use docker in combination with OpenFOAM go to https://github.com/jakobhaervig/openfoam-dockerfiles. The recommended docker file containing extra modules required to run this particular toolchain can be in the repository's main folder.  
 
 ### EXAMPLE
 
