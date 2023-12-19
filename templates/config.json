@@ -1,15 +1,12 @@
 {
   "solver": "rhoCentralFoam",
-  "mesh_file": "/local/disk1/fvalverde/openfoam-data/sphereCases/rocketMesh/rocketShort/noFinSupport/4.5M_13L/constant/polyMesh",
-  "map_file": "/local/disk1/fvalverde/openfoam-data/sphereCases/run/rhoCentralFoamMa2.3_AoA8_R0",
+  "mesh_file": "/data/OpenFOAM-ToolChain-for-Rocket-Aerodynamic-Analysis/rocketMesh/rocketShort/noFinSupport/R1/constant/polyMesh",
+  "map_file": "none",
   "flowVelocity": [
-    672.5994046257726,
+    652.8980028602759,
     0,
-    94.52768174643761
+    187.2154896913251
   ],
-  "vanLeer": 400,
-  "minIter": 1300,
-  "final_Co": 0.32,
   "nprocessors": [
     4,
     2,
@@ -19,7 +16,17 @@
   "temperature": 216.99716,
   "density": 0.20630362,
   "Aref": 0.001282603306,
-  "lRef": 1.04013,
+  "lRef": 0.05715,
+  "coeffs_variation": [
+    0.001,
+    0.001,
+    0.01
+  ],
+  "coeffs_range": [
+    300,
+    300,
+    300
+  ],
   "CofR": [
     0.7286625,
     0,
@@ -40,7 +47,15 @@
     1,
     0
   ],
-  "Cd_windTunnel": 0.3390629117423014,
-  "Cl_windTunnel": 0.6389487992794879,
-  "CmPitch_windTunnel": 3.5773068737801776
+  "Cd_windTunnel": 0.352857475917778,
+  "Cl_windTunnel": 2.6608101957819708,
+  "CmPitch_windTunnel": 10.612903471479184,
+  "purgeWrite": 2,
+  "turbulentKE": 0.0313534687076246,
+  "turbulentOmega": 648.9584107307387,
+  "wallModelnut": true,
+  "wallModelk": true,
+  "vanLeer": 2000,
+  "minIter": 3000,
+  "final_Co": 0.32
 }
