@@ -1,6 +1,9 @@
 # Automatized & Modular OpenFOAM Workspace to Generate Large Aerodynamic Databases for Subsonic and Supersonic Vehicles 
 __by Félix Martí Valverde__
 
+![https://zenodo.org/records/19823943](https://zenodo.org/records/19823943)
+[X] M. V. Félix and C. Stemmer, “TOOLCHAIN FOR AERODYNAMIC CHARACTERIZATION OF A ROCKET DURING ASCENT USING OPENFOAM”. Zenodo, Apr. 27, 2026. doi: 10.5281/zenodo.19823943.
+
 This project provides a complete toolchain for evaluating different rocket geometries at subsonic, transonic, and supersonic regimes. The work contained in this repository is part of a student project carried out at the _Technical University of Munich_ (TUM) under the _Master of Science (M.Sc) in Aerospace_ (year 2023) which aims to provide a standalone and verified methodology to extract aerodynamic characteristics of a rocket using 3D CFD simulation with pressure and density based solvers found in OpenFOAM (ESI group distribution). 
 
 ![PNG Image](images/results.png)
